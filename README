@@ -1,7 +1,7 @@
 Graph Store and SPARQL Protocol (grasp)
 
 The name grasp comes from combing GRAph Store Protocol plus And Sparql Protocol 
-but also implies that you use the Xquery and XProc libraries here-in to get a 
+but also implies that you use the XQuery and XProc libraries here-in to get a 
 hold of (grasp) RDF Graphs from a triple store and/or results from running 
 SPARQL queries againts a Graph Store.
 
