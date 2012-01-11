@@ -54,7 +54,7 @@ declare function impl:normalise-response($response as item()*)
 		return
 			<header name="{local-name($header)}" value="{string($header)}"/>),
 		if (exists(impl:get-response-body($response))) then 
-			<body content-type="{subsequence(tokenize(impl:get-response-head($response)/xhttp:headers/xhttp:content-type/text(), ';'), 1, 1)}">{
+			<body content-type="{subsequence(tokenize(string(impl:get-response-head($response)/xhttp:headers/xhttp:content-type), ';'), 1, 1)}">{
 				impl:get-response-body($response)
 			}</body>
 		else
@@ -148,7 +148,7 @@ declare function impl:get-response-body($response as item()*)
 declare function impl:get-content-type($responseHead as element(xhttp:response)) 
 		as xs:string 
 {
-	subsequence(tokenize($responseHead/xhttp:headers/xhttp:content-type/text(), ';'), 1, 1)
+	subsequence(tokenize(string($responseHead/xhttp:headers/xhttp:content-type), ';'), 1, 1)
 };
 
 
