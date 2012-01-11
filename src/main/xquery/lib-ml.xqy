@@ -139,31 +139,3 @@ declare function impl:get-response-body($response as item()*)
 		subsequence($response, 2, 1)
 };
 
-
-(:~
- : Get the content-type returned in the head of the response'
- : @param $responseHead HTTP response header.
- : @return string value of the HTTP response content-type.
- :)
-declare function impl:get-content-type($responseHead as element(xhttp:response)) 
-		as xs:string 
-{
-	subsequence(tokenize(string($responseHead/xhttp:headers/xhttp:content-type), ';'), 1, 1)
-};
-
-
-
-
-(: === Might become deprecated. ============================================== :)
-
-
-(:~
- : Get the HTTP status code returned in the head of the response data.
- : @param $responseHead HTTP response header.
- : @return string value of the HTTP response content-type.
- :)
-declare function impl:get-response-status-code($responseHead as element(xhttp:response)) 
-		as xs:unsignedShort 
-{
-	xs:unsignedShort($responseHead/xhttp:code)
-};
