@@ -43,7 +43,7 @@ declare function gsp:retrieve-metainfo($endPointURI as xs:string,
 
 
 (:~
- : Retrieve a graph as application/rdf+xml serialisation.
+ : Retrieve the default graph as application/rdf+xml serialisation.
  : @param $endPointURI the URL of the target Graph Store end-point.
  : @return an http:response element contains HTTP metainfo and response body.
  :)
