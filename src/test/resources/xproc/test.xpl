@@ -41,7 +41,9 @@
 	
 	
 	<p:declare-step name="result" type="test:result">
-		<p:documentation>Returns the SVRL report if the test fails or the test result if the test is successful.</p:documentation>
+		<p:documentation>Returns the SVRL report wrapped-up with the result, 
+			which may have useful error info, if the test fails or just the test 
+			result if the test is successful.</p:documentation>
 		<p:input port="source" primary="true"/>
 		<p:input port="test" primary="false"/>
 		<p:input port="report" primary="false"/>
@@ -54,11 +56,16 @@
 				<p:pipe port="report" step="result"/>
 			</p:xpath-context>
 			<p:when test="exists(/svrl:schematron-output/svrl:failed-assert)">
-				<p:identity>
+				<p:wrap match="/*" wrapper="test:report">
 					<p:input port="source">
 						<p:pipe port="report" step="result"/>
 					</p:input>
-				</p:identity>
+				</p:wrap>
+				<p:insert match="/test:report" position="last-child">
+					<p:input port="insertion">
+						<p:pipe port="source" step="result"/>
+					</p:input>
+				</p:insert>
 			</p:when>
 			<p:otherwise>
 				<p:identity>
