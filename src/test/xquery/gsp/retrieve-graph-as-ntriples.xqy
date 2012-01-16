@@ -9,9 +9,4 @@ import module namespace test = "http://www.w3.org/TR/sparql11-protocol/test" at
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
 (: Returns the default graph as N3. :)
-gsp:retrieve-graph(
-	concat($test:SERVICE_URI, 'test/data'), 
-	(''),
-	(),
-	'text/plain'
-)
+gsp:retrieve-default-graph(concat($test:SERVICE_URI, 'test/data'), 'text/plain')

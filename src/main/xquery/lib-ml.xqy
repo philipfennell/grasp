@@ -42,7 +42,7 @@ declare function impl:http-request($request as element(http:request))
 {
 	let $requestURI as xs:string := $request/@href
 	let $method as xs:string := $request/@method
-	let $log := xdmp:log(concat('[XQuery] Request: ', upper-case($method), ' ', $requestURI), 'info')
+	let $log := xdmp:log(concat('[XQuery][GRASP] Request:&#10;', xdmp:quote($request)), 'debug')
 	let $response as item()* := 
 		xdmp:apply(
 			xdmp:function(xs:QName(concat('xdmp:http-', lower-case($method)))), 

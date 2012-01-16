@@ -11,8 +11,8 @@ declare namespace st 	= "http://www.w3.org/2007/SPARQL/protocol-types#";
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
 (: Returns the default graph. :)
-gsp:retrieve-metainfo(
+gsp:delete-graph(
 	concat($test:SERVICE_URI, 'test/data'), 
-	true(),
-	()
+	(),
+	'http://www.books.com/harry-potter'
 )
