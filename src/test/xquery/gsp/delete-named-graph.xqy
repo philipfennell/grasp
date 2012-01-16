@@ -11,8 +11,4 @@ declare namespace st 	= "http://www.w3.org/2007/SPARQL/protocol-types#";
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
 (: Returns the default graph. :)
-gsp:delete-graph(
-	concat($test:SERVICE_URI, 'test/data'), 
-	(),
-	'http://www.books.com/harry-potter'
-)
+gsp:delete-named-graph(concat($test:SERVICE_URI, 'test/data'), 'http://www.books.com/harry-potter')
