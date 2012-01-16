@@ -19,6 +19,7 @@ xquery version "1.0" encoding "utf-8";
  : that implement the W3C's Graph Store HTTP Protocol:
  : <http://www.w3.org/TR/sparql11-http-rdf-update/>
  : @author Philip A. R. Fennell
+ : @version 0.2
  :)
 
 module namespace gsp = "http://www.w3.org/TR/sparql11-http-rdf-update/";
@@ -30,7 +31,7 @@ declare default function namespace "http://www.w3.org/2005/xpath-functions";
 declare namespace http = "http://www.w3.org/Protocols/rfc2616"; 
 
 (:~ User-agent string. :) 
-declare variable $USER_AGENT	as xs:string := "xqy-graph-store-http-protocol-client/0.1";
+declare variable $USER_AGENT	as xs:string := "xqy-graph-store-http-protocol-client/0.2";
 
 (:~ MIME-Types. :)
 declare variable $RDF_XML 		as xs:string := "application/rdf+xml";
@@ -71,7 +72,7 @@ declare function gsp:retrieve-named-graph-metainfo($uri as xs:string,
  : @param $graphURI the named graph URIs
  : @return an http:response element contains HTTP metainfo.
  :)
-declare function gsp:retrieve-graph-metainfo($uri as xs:string, 
+declare (: private :) function gsp:retrieve-graph-metainfo($uri as xs:string, 
 		$default as xs:boolean?, $graphURI as xs:string?) 
 						as element(http:response)
 {
@@ -144,7 +145,7 @@ declare function gsp:retrieve-named-graph($uri as xs:string,
  : @param $mediaType the content-type that will be acceptable to the client.
  : @return an http:response element contains HTTP metainfo and response body.
  :)
-declare function gsp:retrieve-graph($uri as xs:string, 
+declare (: private :) function gsp:retrieve-graph($uri as xs:string, 
 		$default as xs:boolean?, $graphURI as xs:string?, 
 				$mediaType as xs:string) 
 						as element(http:response)
@@ -192,7 +193,7 @@ declare function gsp:merge-named-graph($uri as xs:string,
  : @param $graphContent the graph.
  : @return an http:response element contains HTTP metainfo.
  :)
-declare function gsp:merge-graph($uri as xs:string, $default as xs:boolean?, 
+declare (: private :) function gsp:merge-graph($uri as xs:string, $default as xs:boolean?, 
 		$graphURI as xs:string, $graphContent as item()) 
 				as element(http:response)
 {
@@ -234,7 +235,7 @@ declare function gsp:update-named-graph($uri as xs:string,
  : @param $uri the URL of the target Graph Store end-point.
  : @return an http:response element containing HTTP metainfo.
  :)
-declare function gsp:update-graph($uri as xs:string, 
+declare (: private :) function gsp:update-graph($uri as xs:string, 
 		$default as xs:boolean?, $graphURI as xs:string?, 
 				$graphContent as item()) 
 						as element(http:response)
@@ -280,7 +281,7 @@ declare function gsp:delete-named-graph($uri as xs:string,
  : @param $graphURI the named graph URIs
  : @return an http:response element contains HTTP metainfo.
  :)
-declare function gsp:delete-graph($uri as xs:string, $default as xs:boolean?, 
+declare (: private :) function gsp:delete-graph($uri as xs:string, $default as xs:boolean?, 
 		$graphURI as xs:string?) 
 				as element(http:response)
 {
@@ -301,7 +302,7 @@ declare function gsp:delete-graph($uri as xs:string, $default as xs:boolean?,
  : @throws GSP001 The default and graph parameters cannot be used together.
  : @return the HTTP request XML fragment.
  :)
-declare function gsp:submission($method as xs:string, $uri as xs:string, $default as xs:boolean?, 
+declare (: private :) function gsp:submission($method as xs:string, $uri as xs:string, $default as xs:boolean?, 
 		$graphURI as xs:string*, $mediaType as xs:string, $graphContent as item()?) as 
 				element(http:request) 
 {
