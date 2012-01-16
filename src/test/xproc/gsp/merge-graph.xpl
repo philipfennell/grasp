@@ -15,13 +15,13 @@
 	<p:import href="test/resources/xproc/test.xpl"/>
 	
 	
-	<gsp:merge-graph endpoint-uri="http://localhost:3030" default-graph-uri="/test/data">
+	<gsp:merge-graph debug="true" uri="http://localhost:3030/test/data" default="true">
 		<p:input port="source">
 			<p:document href="test/resources/books-published.rdf"/>
 		</p:input>
 	</gsp:merge-graph>
 	
-	<test:validate-with-schematron assert-valid="true">
+	<test:validate-with-schematron assert-valid="false">
 		<p:input port="schema">
 			<p:document href="test/resources/schemas/successful-response.sch"/>
 		</p:input>

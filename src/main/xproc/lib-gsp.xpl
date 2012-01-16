@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <p:library xmlns:c="http://www.w3.org/ns/xproc-step" 
+		xmlns:cx="http://xmlcalabash.com/ns/extensions"
 		xmlns:gsp="http://www.w3.org/TR/sparql11-http-rdf-update/"
 		xmlns:http="http://www.w3.org/Protocols/rfc2616"
 		xmlns:p="http://www.w3.org/ns/xproc"
@@ -18,10 +19,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p:documentation>
 	
-	
 	<p:documentation>Graph Store Protocol Step Library</p:documentation>
 	
-	
+	<p:import href="library-1.0.xpl"/>
 	
 	
 	<!-- === Private Steps. ================================================ -->
@@ -132,6 +132,38 @@ limitations under the License.</p:documentation>
 	</p:declare-step>
 	
 	
+	<p:declare-step type="gsp:debug-submission">
+		<p:documentation>Dumps the http request fragment to the console if debug == true.</p:documentation>
+		<p:input port="source"/>
+		<p:output port="result"/>
+		<p:option name="debug" required="false" select="'false'"/>
+		
+		<p:choose>
+			<p:when test="$debug eq 'true'">
+				<p:identity name="request"/>
+				
+				<p:wrap match="/c:request" wrapper="message" />
+				<p:escape-markup/>
+				
+				<cx:message>
+					<p:with-option name="message" select="concat('[XProc][GSP] Request:&#10;', string(/message))"/>
+				</cx:message>
+				
+				<p:identity>
+					<p:input port="source">
+						<p:pipe port="result" step="request"/>
+					</p:input>
+				</p:identity>
+			</p:when>
+			<p:otherwise>
+				<p:identity/>
+			</p:otherwise>
+		</p:choose>
+		
+		<p:identity/>
+	</p:declare-step>
+	
+	
 	
 	
 	<!-- === Public Steps. ================================================= -->
@@ -139,13 +171,21 @@ limitations under the License.</p:documentation>
 	<p:declare-step type="gsp:retrieve-metainfo">
 		<p:documentation>Retrieve Metainformation</p:documentation>
 		<p:output port="result"/>
-		<p:option name="endpoint-uri" required="true"/>
-		<p:option name="default-graph-uri" required="true"/>
+		<p:option name="uri" required="true"/>
 		<p:option name="media-type" required="false" select="'application/rdf+xml'"/>
+		<p:option name="default" required="false" select="'false'"/>
+		<p:option name="graph" required="false" select="''"/>
+		<p:option name="debug" required="false" select="'false'"/>
+		
+		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default=' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
 		
 		<gsp:submission method="head">
-			<p:with-option name="request-uri" select="concat($endpoint-uri, $default-graph-uri, '?default=')"/>
+			<p:with-option name="request-uri" select="concat($uri, if (contains($uri, '?')) then '&amp;' else '?', $params)"/>
 		</gsp:submission>
+		
+		<gsp:debug-submission>
+			<p:with-option name="debug" select="$debug"/>
+		</gsp:debug-submission>
 		
 		<gsp:http-request/>
 	</p:declare-step>
@@ -154,14 +194,22 @@ limitations under the License.</p:documentation>
 	<p:declare-step type="gsp:retrieve-graph">
 		<p:documentation>Retrieve Graph</p:documentation>
 		<p:output port="result"/>
-		<p:option name="endpoint-uri" required="true"/>
-		<p:option name="default-graph-uri" required="true"/>
+		<p:option name="uri" required="true"/>
+		<p:option name="default" required="false" select="'false'"/>
+		<p:option name="graph" required="false" select="''"/>
 		<p:option name="media-type" required="false" select="'application/rdf+xml'"/>
+		<p:option name="debug" required="false" select="'false'"/>
+		
+		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default=' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
 		
 		<gsp:submission method="get">
-			<p:with-option name="request-uri" select="concat($endpoint-uri, $default-graph-uri, '?default=')"/>
+			<p:with-option name="request-uri" select="concat($uri, if (contains($uri, '?')) then '&amp;' else '?', $params)"/>
 			<p:with-option name="media-type" select="$media-type"/>
 		</gsp:submission>
+		
+		<gsp:debug-submission>
+			<p:with-option name="debug" select="$debug"/>
+		</gsp:debug-submission>
 		
 		<gsp:http-request/>
 	</p:declare-step>
@@ -171,12 +219,20 @@ limitations under the License.</p:documentation>
 		<p:documentation>Merge Graph - merges current graph with submitted graph.</p:documentation>
 		<p:input port="source"/>
 		<p:output port="result"/>
-		<p:option name="endpoint-uri" required="true"/>
-		<p:option name="default-graph-uri" required="true"/>
+		<p:option name="uri" required="true"/>
+		<p:option name="default" required="false" select="'false'"/>
+		<p:option name="graph" required="false" select="''"/>
+		<p:option name="debug" required="false" select="'false'"/>
+		
+		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default=' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
 		
 		<gsp:graph-submission method="post">
-			<p:with-option name="request-uri" select="concat($endpoint-uri, $default-graph-uri, '?default=')"/>
+			<p:with-option name="request-uri" select="concat($uri, if (contains($uri, '?')) then '&amp;' else '?', $params)"/>
 		</gsp:graph-submission>
+		
+		<gsp:debug-submission>
+			<p:with-option name="debug" select="$debug"/>
+		</gsp:debug-submission>
 		
 		<gsp:http-request/>
 	</p:declare-step>
@@ -186,41 +242,67 @@ limitations under the License.</p:documentation>
 		<p:documentation>Update Graph - replaces existing graph</p:documentation>
 		<p:input port="source"/>
 		<p:output port="result"/>
-		<p:option name="endpoint-uri" required="true"/>
-		<p:option name="default-graph-uri" required="true"/>
+		<p:option name="uri" required="true"/>
+		<p:option name="default" required="false" select="'false'"/>
+		<p:option name="graph" required="false" select="''"/>
+		<p:option name="debug" required="false" select="'false'"/>
+		
+		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default=' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
 		
 		<gsp:graph-submission method="put">
-			<p:with-option name="request-uri" select="concat($endpoint-uri, $default-graph-uri, '?default=')"/>
+			<p:with-option name="request-uri" select="concat($uri, if (contains($uri, '?')) then '&amp;' else '?', $params)"/>
 		</gsp:graph-submission>
+		
+		<gsp:debug-submission>
+			<p:with-option name="debug" select="$debug"/>
+		</gsp:debug-submission>
 		
 		<gsp:http-request/>
 	</p:declare-step>
 	
 	
+	<!-- PATCH is not implemented in Calabash at present.
 	<p:declare-step type="gsp:patch-graph">
 		<p:documentation>Patch Graph</p:documentation>
 		<p:input port="source"/>
 		<p:output port="result"/>
-		<p:option name="endpoint-uri" required="true"/>
-		<p:option name="default-graph-uri" required="true"/>
+		<p:option name="uri" required="true"/>
+		<p:option name="default" required="false" select="'false'"/>
+		<p:option name="graph" required="false" select="''"/>
+		<p:option name="debug" required="false" select="'false'"/>
+		
+		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default=' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
 		
 		<gsp:graph-submission method="patch">
-			<p:with-option name="request-uri" select="concat($endpoint-uri, $default-graph-uri, '?default=')"/>
+			<p:with-option name="request-uri" select="concat($uri, if (contains($uri, '?')) then '&amp;' else '?', $params)"/>
 		</gsp:graph-submission>
+		
+		<gsp:debug-submission>
+			<p:with-option name="debug" select="$debug"/>
+		</gsp:debug-submission>
 		
 		<gsp:http-request/>
 	</p:declare-step>
+	-->
 	
 	
 	<p:declare-step type="gsp:delete-graph">
 		<p:documentation>Delete Graph</p:documentation>
 		<p:output port="result"/>
-		<p:option name="endpoint-uri" required="true"/>
-		<p:option name="default-graph-uri" required="true"/>
+		<p:option name="uri" required="true"/>
+		<p:option name="default" required="false" select="'false'"/>
+		<p:option name="graph" required="false" select="''"/>
+		<p:option name="debug" required="false" select="'false'"/>
+		
+		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default=' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
 		
 		<gsp:submission method="delete">
-			<p:with-option name="request-uri" select="concat($endpoint-uri, $default-graph-uri, '?default=')"/>
+			<p:with-option name="request-uri" select="concat($uri, if (contains($uri, '?')) then '&amp;' else '?', $params)"/>
 		</gsp:submission>
+		
+		<gsp:debug-submission>
+			<p:with-option name="debug" select="$debug"/>
+		</gsp:debug-submission>
 		
 		<gsp:http-request/>
 	</p:declare-step>
