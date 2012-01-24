@@ -5,7 +5,7 @@
 		xmlns:http="http://www.w3.org/Protocols/rfc2616"
 		xmlns:p="http://www.w3.org/ns/xproc"
 	 	version="0.1"
-		exclude-inline-prefixes="c">
+		exclude-inline-prefixes="#all">
 	
 	<p:documentation>Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ limitations under the License.</p:documentation>
 		<p:output port="result"/>
 		<p:option name="method" required="true"/>
 		<p:option name="request-uri" required="true"/>
-		<p:option name="media-type" required="false" select="'application/rdf+xml'"/>
+		<p:option name="content-type" required="true"/>
 		
 		<gsp:submission>
 			<p:with-option name="method" select="$method"/>
@@ -78,6 +78,10 @@ limitations under the License.</p:documentation>
 				</p:inline>
 			</p:input>
 		</p:insert>
+		
+		<p:add-attribute match="/c:request/c:body" attribute-name="content-type">
+			<p:with-option name="attribute-value" select="$content-type"/>
+		</p:add-attribute>
 		
 		<p:insert match="/c:request/c:body" position="last-child">
 			<p:input port="insertion">
@@ -220,6 +224,7 @@ limitations under the License.</p:documentation>
 		<p:input port="source"/>
 		<p:output port="result"/>
 		<p:option name="uri" required="true"/>
+		<p:option name="content-type" required="true"/>
 		<p:option name="default" required="false" select="'false'"/>
 		<p:option name="graph" required="false" select="''"/>
 		<p:option name="debug" required="false" select="'false'"/>
@@ -228,6 +233,7 @@ limitations under the License.</p:documentation>
 		
 		<gsp:graph-submission method="post">
 			<p:with-option name="request-uri" select="concat($uri, if (contains($uri, '?')) then '&amp;' else '?', $params)"/>
+			<p:with-option name="content-type" select="$content-type"/>
 		</gsp:graph-submission>
 		
 		<gsp:debug-submission>
@@ -238,11 +244,12 @@ limitations under the License.</p:documentation>
 	</p:declare-step>
 	
 	
-	<p:declare-step type="gsp:update-graph">
-		<p:documentation>Update Graph - replaces existing graph</p:documentation>
+	<p:declare-step type="gsp:add-graph">
+		<p:documentation>Add Graph - replaces existing graph</p:documentation>
 		<p:input port="source"/>
 		<p:output port="result"/>
 		<p:option name="uri" required="true"/>
+		<p:option name="content-type" required="true"/>
 		<p:option name="default" required="false" select="'false'"/>
 		<p:option name="graph" required="false" select="''"/>
 		<p:option name="debug" required="false" select="'false'"/>
@@ -251,6 +258,7 @@ limitations under the License.</p:documentation>
 		
 		<gsp:graph-submission method="put">
 			<p:with-option name="request-uri" select="concat($uri, if (contains($uri, '?')) then '&amp;' else '?', $params)"/>
+			<p:with-option name="content-type" select="$content-type"/>
 		</gsp:graph-submission>
 		
 		<gsp:debug-submission>

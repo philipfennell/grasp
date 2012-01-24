@@ -15,7 +15,8 @@
 	<p:import href="test/resources/xproc/test.xpl"/>
 	
 	
-	<gsp:graph-submission request-uri="http://localhost:3030/test/data?default=" method="put">
+	<gsp:graph-submission request-uri="http://localhost:3030/test/data?default=" 
+			content-type="application/rdf+xml" method="put">
 		<p:input port="source">
 			<p:document href="test/resources/books.rdf"/>
 		</p:input>

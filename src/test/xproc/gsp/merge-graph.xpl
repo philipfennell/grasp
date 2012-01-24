@@ -15,7 +15,8 @@
 	<p:import href="test/resources/xproc/test.xpl"/>
 	
 	
-	<gsp:merge-graph debug="true" uri="http://localhost:3030/test/data" default="true">
+	<gsp:merge-graph debug="true" uri="http://localhost:3030/test/data"
+			default="true" content-type="application/rdf+xml">
 		<p:input port="source">
 			<p:document href="test/resources/books-published.rdf"/>
 		</p:input>

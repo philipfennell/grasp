@@ -15,11 +15,12 @@
 	<p:import href="test/resources/xproc/test.xpl"/>
 	
 	
-	<gsp:update-graph name="test" uri="http://localhost:3030/test/data">
+	<gsp:add-graph name="test" uri="http://localhost:3030/test/data"
+			content-type="application/rdf+xml">
 		<p:input port="source">
 			<p:document href="test/resources/books.rdf"/>
 		</p:input>
-	</gsp:update-graph>
+	</gsp:add-graph>
 	
 	<!--<test:validate-with-schematron assert-valid="false">
 		<p:input port="schema">
