@@ -204,38 +204,38 @@ declare (: private :) function gsp:merge-graph($uri as xs:string, $default as xs
 
 
 (:~
- : Update Graph - replaces current graph with submitted graph. 
+ : Add Graph - replaces current default graph with the submitted graph. 
  : @param $uri the URL of the target Graph Store end-point.
  : @return an http:response element contains HTTP metainfo.
  :)
-declare function gsp:update-default-graph($uri as xs:string, 
+declare function gsp:add-default-graph($uri as xs:string, 
 		$graphContent as item()) 
 				as element(http:response)
 {
-	gsp:update-graph($uri, true(), (), $graphContent)
+	gsp:add-graph($uri, true(), (), $graphContent)
 };
 
 
 (:~
- : Update Graph - replaces current graph with submitted graph. 
+ : Add Graph - replaces the named graph with the submitted graph. 
  : @param $uri the URL of the target Graph Store end-point.
  : @param $graphURI the named graph URIs
  : @return an http:response element contains HTTP metainfo.
  :)
-declare function gsp:update-named-graph($uri as xs:string, 
+declare function gsp:add-named-graph($uri as xs:string, 
 		$graphURI as xs:string, $graphContent as item()) 
 				as element(http:response)
 {
-	gsp:update-graph($uri, (), $graphURI, $graphContent)
+	gsp:add-graph($uri, (), $graphURI, $graphContent)
 };
 
 
 (:~
- : Update Graph - replaces current graph with submitted graph. 
+ : Add Graph - replaces the current graph with the submitted graph. 
  : @param $uri the URL of the target Graph Store end-point.
  : @return an http:response element containing HTTP metainfo.
  :)
-declare (: private :) function gsp:update-graph($uri as xs:string, 
+declare (: private :) function gsp:add-graph($uri as xs:string, 
 		$default as xs:boolean?, $graphURI as xs:string?, 
 				$graphContent as item()) 
 						as element(http:response)

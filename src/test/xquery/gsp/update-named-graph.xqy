@@ -11,7 +11,7 @@ declare namespace st 	= "http://www.w3.org/2007/SPARQL/protocol-types#";
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
 (: Replaces the default graph with this graph. :)
-gsp:update-named-graph(concat($test:SERVICE_URI, 'test/data'), 
+gsp:add-named-graph(concat($test:SERVICE_URI, 'test/data'), 
 	'http://www.books.com/harry-potter',
 	<rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/"
 			xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
