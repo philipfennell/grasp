@@ -17,8 +17,7 @@
 	<p:import href="test/resources/xproc/test.xpl"/>
 	
 	
-	<gsp:retrieve-graph uri="http://localhost:3030/test/data" 
-			graph="http://www.books.com/harry-potter"/>
+	<gsp:delete-graph uri="http://localhost:3030/test/data" default="true"/>
 	
 	<test:validate-with-schematron assert-valid="false">
 		<p:input port="schema">

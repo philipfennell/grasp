@@ -17,10 +17,9 @@
 	<p:import href="test/resources/xproc/test.xpl"/>
 	
 	
-	<gsp:retrieve-graph uri="http://localhost:3030/test/data" 
-			graph="http://www.books.com/harry-potter"/>
+	<gsp:retrieve-metainfo uri="http://localhost:3030/test/data" default="true"/>
 	
-	<test:validate-with-schematron assert-valid="false">
+	<test:validate-with-schematron assert-valid="true">
 		<p:input port="schema">
 			<p:document href="test/resources/schemas/successful-response.sch"/>
 		</p:input>
