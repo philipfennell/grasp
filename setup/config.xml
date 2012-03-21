@@ -13,7 +13,7 @@
     <name>8004-GRASP-XDBC</name>
     <package-xdbc-properties>
       <enabled>true</enabled>
-      <root>C:\Users\pfennell\Projects\SemanticWeb\grasp\src</root>
+      <root>/</root>
       <port>8004</port>
       <display-last-login>false</display-last-login>
       <address>0.0.0.0</address>
