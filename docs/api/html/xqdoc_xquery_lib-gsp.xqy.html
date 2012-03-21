@@ -1,0 +1,437 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta http-equiv="Generator" content="xquerydoc - https://github.com/xquery/xquerydoc"/><title>xqDoc - </title><style type="text/css">
+          body {
+          font-family: Helvetica;
+          padding: 0.5em  1em;
+          }
+          pre {
+          font-family: Inconsolata, Consolas, monospace;
+          }
+          ol.results {
+          padding-left: 0;
+          }
+          .footer {
+          text-align:right;
+          border-top: solid 4px;
+          padding: 0.25em 0.5em;
+          font-size: 85%;
+          color: #999;
+          }
+          li.result {
+          list-style-position: inside;
+          list-style: none;
+          height:140px;
+          }
+          h2 {
+          display: inline-block;
+          margin: 0;
+          }
+
+          h2 a,
+          .result h3 a {
+          text-decoration: inherit;
+          color: inherit;
+          }
+          h3{
+	  font-size: 140%;
+	  background-color: #aaa;
+	  border-bottom: 1px solid #000;
+	  width: 100%;
+	  }
+          h4{
+	  font-size: 100%;
+	  background-color: #ddd;
+	  width: 90%;
+	  }
+
+          .namespace {
+          color: #999;
+          }
+          .namespace:before {
+          content: "{";
+          }
+          .namespace:after {
+          content: "}";
+          }
+          table{
+          width:75%;
+          float:right;
+          }
+          td {
+          height:100px;
+          width:50%;
+          vertical-align:text-top;
+          }
+        </style><script src="lib/prettify.js" type="text/javascript"> </script><script src="lib/lang-xq.js" type="text/javascript"> </script><link rel="stylesheet" type="text/css" href="lib/prettify.css"/></head><body class="home"><div id="main"><h1><span class="namespace">http://www.w3.org/TR/sparql11-http-rdf-update/</span>  library module </h1><div id="variables"><h3>Variables</h3><div id="var_USER_AGENT"><h4><pre class="prettyprint lang-xq"><u>Variable</u>: $USER_AGENT as  xs:string</pre></h4><p>User-agent string.</p></div><div id="var_RDF_XML"><h4><pre class="prettyprint lang-xq"><u>Variable</u>: $RDF_XML as  xs:string</pre></h4><p>MIME-Types.</p></div><div id="var_NTRIPLES"><h4><pre class="prettyprint lang-xq"><u>Variable</u>: $NTRIPLES as  xs:string</pre></h4></div><div id="var_TURTLE"><h4><pre class="prettyprint lang-xq"><u>Variable</u>: $TURTLE as  xs:string</pre></h4></div></div><div id="functions"><h3>Functions</h3><div id="func_gsp_retrieve-default-graph-metainfo_1"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:retrieve-default-graph-metainfo($uri as xs:string
+) as  element(http:response)</pre></h4><p>Retrieve the default graph's metainformation.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element contains HTTP metainfo.</li></ul></div><div id="func_gsp_retrieve-named-graph-metainfo_2"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:retrieve-named-graph-metainfo($uri as xs:string, 
+		$graphURI as xs:string?
+) as  element(http:response)</pre></h4><p>Retrieve the named graph's metainformation.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>graphURI as  xs:string? the named graph URIs</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element contains HTTP metainfo.</li></ul></div><div id="func_gsp_retrieve-graph-metainfo_3"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:retrieve-graph-metainfo($uri as xs:string, 
+		$default as xs:boolean?, $graphURI as xs:string?
+) as  element(http:response)</pre></h4><p>Retrieve a graph's metainformation.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>default as  xs:boolean? selects the 'default' graph.</li><li>graphURI as  xs:string? the named graph URIs</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element contains HTTP metainfo.</li></ul></div><div id="func_gsp_retrieve-default-graph_1"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:retrieve-default-graph($uri as xs:string
+) as  element(http:response)</pre></h4><p>Retrieve the default graph as application/rdf+xml serialisation.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element contains HTTP metainfo and response body.</li></ul></div><div id="func_gsp_retrieve-default-graph_2"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:retrieve-default-graph($uri as xs:string, 
+		$mediaType as xs:string
+) as  element(http:response)</pre></h4><p>Retrieve the default graph as requested serialisation.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>mediaType as  xs:string the content-type that will be acceptable to the client.</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element contains HTTP metainfo and response body.</li></ul></div><div id="func_gsp_retrieve-named-graph_2"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:retrieve-named-graph($uri as xs:string, 
+		$graphURI as xs:string
+) as  element(http:response)</pre></h4><p>Retrieve the default graph as application/rdf+xml serialisation.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>graphURI as  xs:string the named graph URIs</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element contains HTTP metainfo and response body.</li></ul></div><div id="func_gsp_retrieve-named-graph_3"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:retrieve-named-graph($uri as xs:string, 
+		$graphURI as xs:string, $mediaType as xs:string
+) as  element(http:response)</pre></h4><p>Retrieve the default graph as requested serialisation.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>graphURI as  xs:string the named graph URIs</li><li>mediaType as  xs:string the content-type that will be acceptable to the client.</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element contains HTTP metainfo and response body.</li></ul></div><div id="func_gsp_retrieve-graph_4"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:retrieve-graph($uri as xs:string, 
+		$default as xs:boolean?, $graphURI as xs:string?, 
+				$mediaType as xs:string
+) as  element(http:response)</pre></h4><p>Retrieve a graph specifiying the required serialisation.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>default as  xs:boolean? selects the 'default' graph.</li><li>graphURI as  xs:string? the named graph URIs</li><li>mediaType as  xs:string the content-type that will be acceptable to the client.</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element contains HTTP metainfo and response body.</li></ul></div><div id="func_gsp_merge-default-graph_2"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:merge-default-graph($uri as xs:string, 
+		$graphContent as item()
+) as  element(http:response)</pre></h4><p>Merge the default graph - merges the context graph with submitted graph.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>graphContent as  item() the graph.</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element contains HTTP metainfo.</li></ul></div><div id="func_gsp_merge-named-graph_3"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:merge-named-graph($uri as xs:string, 
+		$graphURI as xs:string, $graphContent as item()
+) as  element(http:response)</pre></h4><p>Merge the default graph - merges the context graph with submitted graph.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>graphURI as  xs:string the named graph URIs.</li><li>graphContent as  item() the graph.</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element contains HTTP metainfo.</li></ul></div><div id="func_gsp_merge-graph_4"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:merge-graph($uri as xs:string, $default as xs:boolean?, 
+		$graphURI as xs:string?, $graphContent as item()
+) as  element(http:response)</pre></h4><p>Merge Graph - merges current graph with submitted graph.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>default as  xs:boolean? selects the 'default' graph.</li><li>graphURI as  xs:string? the named graph URIs.</li><li>graphContent as  item() the graph.</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element contains HTTP metainfo.</li></ul></div><div id="func_gsp_add-default-graph_2"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:add-default-graph($uri as xs:string, 
+		$graphContent as item()
+) as  element(http:response)</pre></h4><p>Add Graph - replaces current default graph with the submitted graph.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>graphContent as  item()</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element contains HTTP metainfo.</li></ul></div><div id="func_gsp_add-named-graph_3"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:add-named-graph($uri as xs:string, 
+		$graphURI as xs:string, $graphContent as item()
+) as  element(http:response)</pre></h4><p>Add Graph - replaces the named graph with the submitted graph.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>graphURI as  xs:string the named graph URIs</li><li>graphContent as  item()</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element contains HTTP metainfo.</li></ul></div><div id="func_gsp_add-graph_4"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:add-graph($uri as xs:string, 
+		$default as xs:boolean?, $graphURI as xs:string?, 
+				$graphContent as item()
+) as  element(http:response)</pre></h4><p>Add Graph - replaces the current graph with the submitted graph.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>default as  xs:boolean?</li><li>graphURI as  xs:string?</li><li>graphContent as  item()</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element containing HTTP metainfo.</li></ul></div><div id="func_gsp_delete-default-graph_1"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:delete-default-graph($uri as xs:string
+) as  element(http:response)</pre></h4><p>Delete the default graph.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element contains HTTP metainfo.</li></ul></div><div id="func_gsp_delete-named-graph_2"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:delete-named-graph($uri as xs:string, 
+		$graphURI as xs:string
+) as  element(http:response)</pre></h4><p>Delete the named graph.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>graphURI as  xs:string the named graph URIs</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element containing HTTP metainfo.</li></ul></div><div id="func_gsp_delete-graph_3"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:delete-graph($uri as xs:string, $default as xs:boolean?, 
+		$graphURI as xs:string?
+) as  element(http:response)</pre></h4><p>Delete a graph.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>default as  xs:boolean? selects the 'default' graph.</li><li>graphURI as  xs:string? the named graph URIs</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element contains HTTP metainfo.</li></ul></div><div id="func_gsp_submission_6"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:submission($method as xs:string, $uri as xs:string, $default as xs:boolean?, 
+		$graphURI as xs:string*, $mediaType as xs:string, $graphContent as item()?
+) as  
+				element(http:request)</pre></h4><p>Builds an XML fragment that carries the request details.</p>GSP001 The default and graph parameters cannot be used together.<h5>Params</h5><ul><li>method as  xs:string HTTP method (HEAD|GET|POST|PUT|DELETE)</li><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>default as  xs:boolean? selects the 'default' graph.</li><li>graphURI as  xs:string* the named graph URIs</li><li>mediaType as  xs:string Media MIME-Type for the HTTP accpet header</li><li>graphContent as  item()? An RDF graph.</li></ul><h5>Returns</h5><ul><li> 
+				element(http:request): the HTTP request XML fragment.</li></ul></div></div><div><h3>Original Source Code</h3><pre class="prettyprint lang-xq">xquery version "1.0" encoding "utf-8";
+
+(:
+ : Licensed under the Apache License, Version 2.0 (the "License");
+ : you may not use this file except in compliance with the License.
+ : You may obtain a copy of the License at
+ :
+ :     http://www.apache.org/licenses/LICENSE-2.0
+ :
+ : Unless required by applicable law or agreed to in writing, software
+ : distributed under the License is distributed on an "AS IS" BASIS,
+ : WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ : See the License for the specific language governing permissions and
+ : limitations under the License.
+ :)
+ 
+(:~
+ : This library provides functions for accessing and managing RDF Graph Stores
+ : that implement the W3C's Graph Store HTTP Protocol:
+ : &lt;http://www.w3.org/TR/sparql11-http-rdf-update/&gt;
+ : @author Philip A. R. Fennell
+ : @version 0.2
+ :)
+
+module namespace gsp = "http://www.w3.org/TR/sparql11-http-rdf-update/";
+
+import module namespace impl = "http://www.marklogic.com/http" at
+		"lib-ml.xqy"; 
+
+declare default function namespace "http://www.w3.org/2005/xpath-functions";
+declare namespace http = "http://www.w3.org/Protocols/rfc2616"; 
+
+(:~ User-agent string. :) 
+declare variable $USER_AGENT	as xs:string := "xqy-graph-store-http-protocol-client/0.2";
+
+(:~ MIME-Types. :)
+declare variable $RDF_XML 		as xs:string := "application/rdf+xml";
+declare variable $NTRIPLES 		as xs:string := "text/plain";
+declare variable $TURTLE 		as xs:string := "text/turtle";
+
+
+(:~
+ : Retrieve the default graph's metainformation. 
+ : @param $uri the URL of the target Graph Store end-point.
+ : @return an http:response element contains HTTP metainfo.
+ :)
+declare function gsp:retrieve-default-graph-metainfo($uri as xs:string) 
+		as element(http:response)
+{
+	gsp:retrieve-graph-metainfo($uri, true(), ())
+};
+
+
+(:~
+ : Retrieve the named graph's metainformation. 
+ : @param $uri the URL of the target Graph Store end-point.
+ : @param $graphURI the named graph URIs
+ : @return an http:response element contains HTTP metainfo.
+ :)
+declare function gsp:retrieve-named-graph-metainfo($uri as xs:string, 
+		$graphURI as xs:string?) 
+				as element(http:response)
+{
+	gsp:retrieve-graph-metainfo($uri, (), $graphURI)
+};
+
+
+(:~
+ : Retrieve a graph's metainformation. 
+ : @param $uri the URL of the target Graph Store end-point.
+ : @param $default selects the 'default' graph.
+ : @param $graphURI the named graph URIs
+ : @return an http:response element contains HTTP metainfo.
+ :)
+declare (: private :) function gsp:retrieve-graph-metainfo($uri as xs:string, 
+		$default as xs:boolean?, $graphURI as xs:string?) 
+						as element(http:response)
+{
+	impl:normalise-response(
+			impl:http-request(gsp:submission('HEAD', $uri, 
+					$default, $graphURI, $RDF_XML, ())))
+};
+
+
+(:~
+ : Retrieve the default graph as application/rdf+xml serialisation.
+ : @param $uri the URL of the target Graph Store end-point.
+ : @return an http:response element contains HTTP metainfo and response body.
+ :)
+declare function gsp:retrieve-default-graph($uri as xs:string) 
+						as element(http:response)
+{
+	gsp:retrieve-graph($uri, true(), (), $RDF_XML)
+};
+
+
+(:~
+ : Retrieve the default graph as requested serialisation.
+ : @param $uri the URL of the target Graph Store end-point.
+ : @param $mediaType the content-type that will be acceptable to the client.
+ : @return an http:response element contains HTTP metainfo and response body.
+ :)
+declare function gsp:retrieve-default-graph($uri as xs:string, 
+		$mediaType as xs:string) 
+						as element(http:response)
+{
+	gsp:retrieve-graph($uri, true(), (), $mediaType)
+};
+
+
+(:~
+ : Retrieve the default graph as application/rdf+xml serialisation.
+ : @param $uri the URL of the target Graph Store end-point.
+ : @param $graphURI the named graph URIs
+ : @return an http:response element contains HTTP metainfo and response body.
+ :)
+declare function gsp:retrieve-named-graph($uri as xs:string, 
+		$graphURI as xs:string) 
+				as element(http:response)
+{
+	gsp:retrieve-graph($uri, (), $graphURI, $RDF_XML)
+};
+
+
+(:~
+ : Retrieve the default graph as requested serialisation.
+ : @param $uri the URL of the target Graph Store end-point.
+ : @param $graphURI the named graph URIs
+ : @param $mediaType the content-type that will be acceptable to the client.
+ : @return an http:response element contains HTTP metainfo and response body.
+ :)
+declare function gsp:retrieve-named-graph($uri as xs:string, 
+		$graphURI as xs:string, $mediaType as xs:string) 
+				as element(http:response)
+{
+	gsp:retrieve-graph($uri, (), $graphURI, $mediaType)
+};
+
+
+(:~
+ : Retrieve a graph specifiying the required serialisation. 
+ : @param $uri the URL of the target Graph Store end-point.
+ : @param $default selects the 'default' graph.
+ : @param $graphURI the named graph URIs
+ : @param $mediaType the content-type that will be acceptable to the client.
+ : @return an http:response element contains HTTP metainfo and response body.
+ :)
+declare (: private :) function gsp:retrieve-graph($uri as xs:string, 
+		$default as xs:boolean?, $graphURI as xs:string?, 
+				$mediaType as xs:string) 
+						as element(http:response)
+{
+	impl:normalise-response(
+			impl:http-request(gsp:submission('GET', $uri, $default, $graphURI, 
+					$mediaType, ())))
+};
+
+
+(:~
+ : Merge the default graph - merges the context graph with submitted graph. 
+ : @param $uri the URL of the target Graph Store end-point.
+ : @param $graphContent the graph.
+ : @return an http:response element contains HTTP metainfo.
+ :)
+declare function gsp:merge-default-graph($uri as xs:string, 
+		$graphContent as item()) 
+				as element(http:response)
+{
+	gsp:merge-graph($uri, true(), (), $graphContent)
+};
+
+
+(:~
+ : Merge the default graph - merges the context graph with submitted graph. 
+ : @param $uri the URL of the target Graph Store end-point.
+ : @param $graphURI the named graph URIs.
+ : @param $graphContent the graph.
+ : @return an http:response element contains HTTP metainfo.
+ :)
+declare function gsp:merge-named-graph($uri as xs:string, 
+		$graphURI as xs:string, $graphContent as item()) 
+				as element(http:response)
+{
+	gsp:merge-graph($uri, (), $graphURI, $graphContent)
+};
+
+
+(:~
+ : Merge Graph - merges current graph with submitted graph. 
+ : @param $uri the URL of the target Graph Store end-point.
+ : @param $default selects the 'default' graph.
+ : @param $graphURI the named graph URIs.
+ : @param $graphContent the graph.
+ : @return an http:response element contains HTTP metainfo.
+ :)
+declare (: private :) function gsp:merge-graph($uri as xs:string, $default as xs:boolean?, 
+		$graphURI as xs:string?, $graphContent as item()) 
+				as element(http:response)
+{
+	impl:normalise-response(
+			impl:http-request(gsp:submission('POST', $uri, $default, $graphURI, 
+					$RDF_XML, $graphContent)))
+};
+
+
+(:~
+ : Add Graph - replaces current default graph with the submitted graph. 
+ : @param $uri the URL of the target Graph Store end-point.
+ : @return an http:response element contains HTTP metainfo.
+ :)
+declare function gsp:add-default-graph($uri as xs:string, 
+		$graphContent as item()) 
+				as element(http:response)
+{
+	gsp:add-graph($uri, true(), (), $graphContent)
+};
+
+
+(:~
+ : Add Graph - replaces the named graph with the submitted graph. 
+ : @param $uri the URL of the target Graph Store end-point.
+ : @param $graphURI the named graph URIs
+ : @return an http:response element contains HTTP metainfo.
+ :)
+declare function gsp:add-named-graph($uri as xs:string, 
+		$graphURI as xs:string, $graphContent as item()) 
+				as element(http:response)
+{
+	gsp:add-graph($uri, (), $graphURI, $graphContent)
+};
+
+
+(:~
+ : Add Graph - replaces the current graph with the submitted graph. 
+ : @param $uri the URL of the target Graph Store end-point.
+ : @return an http:response element containing HTTP metainfo.
+ :)
+declare (: private :) function gsp:add-graph($uri as xs:string, 
+		$default as xs:boolean?, $graphURI as xs:string?, 
+				$graphContent as item()) 
+						as element(http:response)
+{
+	impl:normalise-response(
+			impl:http-request(gsp:submission('PUT', $uri, $default, $graphURI, 
+					$RDF_XML, $graphContent)))
+};
+
+
+(:~
+ : Delete the default graph. 
+ : @param $uri the URL of the target Graph Store end-point.
+ : @param $default selects the 'default' graph.
+ : @param $graphURI the named graph URIs
+ : @return an http:response element contains HTTP metainfo.
+ :)
+declare function gsp:delete-default-graph($uri as xs:string) 
+				as element(http:response)
+{
+	gsp:delete-graph($uri, true(), ())
+};
+
+
+(:~
+ : Delete the named graph. 
+ : @param $uri the URL of the target Graph Store end-point.
+ : @param $graphURI the named graph URIs
+ : @return an http:response element containing HTTP metainfo.
+ :)
+declare function gsp:delete-named-graph($uri as xs:string, 
+		$graphURI as xs:string) 
+				as element(http:response)
+{
+	gsp:delete-graph($uri, (), $graphURI)
+};
+
+
+(:~
+ : Delete a graph. 
+ : @param $uri the URL of the target Graph Store end-point.
+ : @param $default selects the 'default' graph.
+ : @param $graphURI the named graph URIs
+ : @return an http:response element contains HTTP metainfo.
+ :)
+declare (: private :) function gsp:delete-graph($uri as xs:string, $default as xs:boolean?, 
+		$graphURI as xs:string?) 
+				as element(http:response)
+{
+	impl:normalise-response(
+			impl:http-request(gsp:submission('DELETE', $uri, $default, 
+					$graphURI, $RDF_XML, ())))
+};
+
+
+(:~
+ : Builds an XML fragment that carries the request details.
+ : @param $method HTTP method (HEAD|GET|POST|PUT|DELETE)
+ : @param $uri the URL of the target Graph Store end-point. 
+ : @param $default selects the 'default' graph.
+ : @param $graphURI the named graph URIs
+ : @param $mediaType Media MIME-Type for the HTTP accpet header
+ : @param $graphContent An RDF graph.
+ : @throws GSP001 The default and graph parameters cannot be used together.
+ : @return the HTTP request XML fragment.
+ :)
+declare (: private :) function gsp:submission($method as xs:string, $uri as xs:string, $default as xs:boolean?, 
+		$graphURI as xs:string*, $mediaType as xs:string, $graphContent as item()?) as 
+				element(http:request) 
+{
+	let $defaultParam as xs:string? := if ($default) then 'default=' else ()
+	let $namedGraphParam as xs:string? := if (string-length($graphURI) gt 0) then concat('graph=', $graphURI) else ()
+	let $requestParams as xs:string := string-join(($defaultParam, $namedGraphParam), '&amp;amp;')
+	return
+		if (matches($requestParams, 'default=') and matches($requestParams, 'graph=')) then 
+			error(
+				xs:QName('GSP001'), 
+				'The default and graph parameters cannot be used together.'
+			)
+		else
+			&lt;request xmlns="http://www.w3.org/Protocols/rfc2616" method="{$method}" 
+					href="{concat($uri, if (exists($requestParams)) then concat('?', $requestParams) else '')}"&gt;
+				&lt;header name="accept" value="{$mediaType}"/&gt;
+				&lt;header name="user-agent" value="{$USER_AGENT}"/&gt;
+				&lt;header name="content-type" value="{$RDF_XML}"/&gt;
+				&lt;header name="encoding" value="UTF-8"/&gt;
+				{
+					if (exists($graphContent)) then  
+						&lt;body xmlns="http://www.w3.org/Protocols/rfc2616" 
+								content-type="{$RDF_XML}"&gt;{$graphContent}&lt;/body&gt;
+					else
+						()
+				}
+			&lt;/request&gt;
+}; 
+</pre></div><br/><div class="footer"><p style="text-align:right"><i/> |
+          generated by xquerydoc <a href="https://github.com/xquery/xquerydoc" target="xquerydoc">https://github.com/xquery/xquerydoc</a></p></div></div><script type="application/javascript">
+	  window.onload = function(){ prettyPrint(); }
+	</script></body></html>
