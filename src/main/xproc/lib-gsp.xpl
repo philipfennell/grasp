@@ -4,7 +4,7 @@
 		xmlns:gsp="http://www.w3.org/TR/sparql11-http-rdf-update/"
 		xmlns:http="http://www.w3.org/Protocols/rfc2616"
 		xmlns:p="http://www.w3.org/ns/xproc"
-	 	version="0.1"
+	 	version="0.3"
 		exclude-inline-prefixes="#all">
 	
 	<p:documentation>Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,12 +32,14 @@ limitations under the License.</p:documentation>
 		<p:option name="method" required="true"/>
 		<p:option name="request-uri" required="true"/>
 		<p:option name="media-type" required="false" select="'application/rdf+xml'"/>
+		<p:option name="slug" required="false" select="''"/>
 		
 		<p:identity>
 			<p:input port="source">
-				<p:inline>
+				<p:inline exclude-inline-prefixes="#all">
 <c:request detailed="true">
-	<c:header name="accept"/>
+	<c:header name="Accept"/>
+	<c:header name="Slug"/>
 	<c:header name="user-agent" value="xpl-graph-store-http-protocol-client/0.1"/>
 </c:request>
 				</p:inline>
@@ -52,8 +54,12 @@ limitations under the License.</p:documentation>
 			<p:with-option name="attribute-value" select="$request-uri"/>
 		</p:add-attribute>
 		
-		<p:add-attribute match="c:request/c:header[@name eq 'accept']" attribute-name="value">
+		<p:add-attribute match="c:request/c:header[@name eq 'Accept']" attribute-name="value">
 			<p:with-option name="attribute-value" select="$media-type"/>
+		</p:add-attribute>
+		
+		<p:add-attribute match="c:request/c:header[@name eq 'Slug']" attribute-name="value">
+			<p:with-option name="attribute-value" select="$slug"/>
 		</p:add-attribute>
 	</p:declare-step>
 	
@@ -65,15 +71,17 @@ limitations under the License.</p:documentation>
 		<p:option name="method" required="true"/>
 		<p:option name="request-uri" required="true"/>
 		<p:option name="content-type" required="true"/>
+		<p:option name="slug" required="false" select="''"/>
 		
 		<gsp:submission>
 			<p:with-option name="method" select="$method"/>
 			<p:with-option name="request-uri" select="$request-uri"/>
+			<p:with-option name="slug" select="$slug"/>
 		</gsp:submission>
 		
 		<p:insert match="/c:request" position="last-child">
 			<p:input port="insertion">
-				<p:inline>
+				<p:inline exclude-inline-prefixes="#all">
 					<c:body content-type="application/rdf+xml"/>
 				</p:inline>
 			</p:input>
@@ -83,11 +91,47 @@ limitations under the License.</p:documentation>
 			<p:with-option name="attribute-value" select="$content-type"/>
 		</p:add-attribute>
 		
-		<p:insert match="/c:request/c:body" position="last-child">
-			<p:input port="insertion">
+		<gsp:insert-entity>
+			<p:input port="entity">
 				<p:pipe port="source" step="graph-submission"/>
 			</p:input>
-		</p:insert>
+			<p:with-option name="content-type" select="$content-type"/>
+		</gsp:insert-entity>
+	</p:declare-step>
+	
+	
+	<p:declare-step name="insert-entity" type="gsp:insert-entity">
+		<p:documentation>Insert the payload entity into the request fragment.</p:documentation>
+		<p:input port="source" primary="true"/>
+		<p:input port="entity" primary="false"/>
+		<p:output port="result"/>
+		<p:option name="content-type" required="true"/>
+		
+		<p:choose>
+			<p:when test="starts-with($content-type, 'text/')">
+				<!--<p:string-replace match="/c:request/c:body/*">
+					<p:with-option name="replace" select="$content-type"/>
+				</p:string-replace>-->
+				<p:replace match="/c:request/c:body">
+					<p:input port="source">
+						<p:pipe port="source" step="insert-entity"/>
+					</p:input>
+					<p:input port="relacement">
+						<p:pipe port="entity" step="insert-entity"/>
+					</p:input>
+				</p:replace>
+			</p:when>
+			<p:otherwise>
+				<p:insert match="/c:request/c:body" position="last-child">
+					<p:input port="source">
+						<p:pipe port="source" step="insert-entity"/>
+					</p:input>
+					<p:input port="insertion">
+						<p:pipe port="entity" step="insert-entity"/>
+					</p:input>
+				</p:insert>
+			</p:otherwise>
+		</p:choose>
 	</p:declare-step>
 	
 	
@@ -179,7 +223,7 @@ limitations under the License.</p:documentation>
 		<p:option name="media-type" required="false" select="'application/rdf+xml'"/>
 		<p:option name="default" required="false" select="'false'"/>
 		<p:option name="graph" required="false" select="''"/>
-		<p:option name="debug" required="false" select="'false'"/>
+		<!--<p:option name="debug" required="false" select="'false'"/>-->
 		
 		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default=' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
 		
@@ -187,9 +231,9 @@ limitations under the License.</p:documentation>
 			<p:with-option name="request-uri" select="concat($uri, if (contains($uri, '?')) then '&amp;' else '?', $params)"/>
 		</gsp:submission>
 		
-		<gsp:debug-submission>
+		<!--<gsp:debug-submission>
 			<p:with-option name="debug" select="$debug"/>
-		</gsp:debug-submission>
+		</gsp:debug-submission>-->
 		
 		<gsp:http-request/>
 	</p:declare-step>
@@ -202,7 +246,7 @@ limitations under the License.</p:documentation>
 		<p:option name="default" required="false" select="'false'"/>
 		<p:option name="graph" required="false" select="''"/>
 		<p:option name="media-type" required="false" select="'application/rdf+xml'"/>
-		<p:option name="debug" required="false" select="'false'"/>
+		<!--<p:option name="debug" required="false" select="'false'"/>-->
 		
 		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default=' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
 		
@@ -211,9 +255,9 @@ limitations under the License.</p:documentation>
 			<p:with-option name="media-type" select="$media-type"/>
 		</gsp:submission>
 		
-		<gsp:debug-submission>
+		<!--<gsp:debug-submission>
 			<p:with-option name="debug" select="$debug"/>
-		</gsp:debug-submission>
+		</gsp:debug-submission>-->
 		
 		<gsp:http-request/>
 	</p:declare-step>
@@ -227,18 +271,20 @@ limitations under the License.</p:documentation>
 		<p:option name="content-type" required="true"/>
 		<p:option name="default" required="false" select="'false'"/>
 		<p:option name="graph" required="false" select="''"/>
-		<p:option name="debug" required="false" select="'false'"/>
+		<p:option name="slug" required="false" select="''"/>
+		<!--<p:option name="debug" required="false" select="'false'"/>-->
 		
 		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default=' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
 		
 		<gsp:graph-submission method="post">
 			<p:with-option name="request-uri" select="concat($uri, if (contains($uri, '?')) then '&amp;' else '?', $params)"/>
 			<p:with-option name="content-type" select="$content-type"/>
+			<p:with-option name="slug" select="$slug"/>
 		</gsp:graph-submission>
 		
-		<gsp:debug-submission>
+		<!--<gsp:debug-submission>
 			<p:with-option name="debug" select="$debug"/>
-		</gsp:debug-submission>
+		</gsp:debug-submission>-->
 		
 		<gsp:http-request/>
 	</p:declare-step>
@@ -252,7 +298,7 @@ limitations under the License.</p:documentation>
 		<p:option name="content-type" required="true"/>
 		<p:option name="default" required="false" select="'false'"/>
 		<p:option name="graph" required="false" select="''"/>
-		<p:option name="debug" required="false" select="'false'"/>
+		<!--<p:option name="debug" required="false" select="'false'"/>-->
 		
 		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default=' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
 		
@@ -261,9 +307,9 @@ limitations under the License.</p:documentation>
 			<p:with-option name="content-type" select="$content-type"/>
 		</gsp:graph-submission>
 		
-		<gsp:debug-submission>
+		<!--<gsp:debug-submission>
 			<p:with-option name="debug" select="$debug"/>
-		</gsp:debug-submission>
+		</gsp:debug-submission>-->
 		
 		<gsp:http-request/>
 	</p:declare-step>
@@ -294,13 +340,33 @@ limitations under the License.</p:documentation>
 	-->
 	
 	
+	<p:declare-step type="gsp:retieve-service-description">
+		<p:documentation>Retrieve the Graph Store's Service Description</p:documentation>
+		<p:output port="result"/>
+		<p:option name="uri" required="true"/>
+		<p:option name="media-type" required="false" select="'application/rdf+xml'"/>
+		<p:option name="debug" required="false" select="'false'"/>
+		
+		<gsp:submission method="get">
+			<p:with-option name="request-uri" select="$uri"/>
+			<p:with-option name="media-type" select="$media-type"/>
+		</gsp:submission>
+		
+		<gsp:debug-submission>
+			<p:with-option name="debug" select="$debug"/>
+		</gsp:debug-submission>
+		
+		<gsp:http-request/>
+	</p:declare-step>
+	
+	
 	<p:declare-step type="gsp:delete-graph">
 		<p:documentation>Delete Graph</p:documentation>
 		<p:output port="result"/>
 		<p:option name="uri" required="true"/>
 		<p:option name="default" required="false" select="'false'"/>
 		<p:option name="graph" required="false" select="''"/>
-		<p:option name="debug" required="false" select="'false'"/>
+		<!--<p:option name="debug" required="false" select="'false'"/>-->
 		
 		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default=' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
 		
@@ -308,9 +374,9 @@ limitations under the License.</p:documentation>
 			<p:with-option name="request-uri" select="concat($uri, if (contains($uri, '?')) then '&amp;' else '?', $params)"/>
 		</gsp:submission>
 		
-		<gsp:debug-submission>
+		<!--<gsp:debug-submission>
 			<p:with-option name="debug" select="$debug"/>
-		</gsp:debug-submission>
+		</gsp:debug-submission>-->
 		
 		<gsp:http-request/>
 	</p:declare-step>

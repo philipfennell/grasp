@@ -194,7 +194,7 @@ declare function gsp:merge-named-graph($uri as xs:string,
  : @return an http:response element contains HTTP metainfo.
  :)
 declare (: private :) function gsp:merge-graph($uri as xs:string, $default as xs:boolean?, 
-		$graphURI as xs:string, $graphContent as item()) 
+		$graphURI as xs:string?, $graphContent as item()) 
 				as element(http:response)
 {
 	impl:normalise-response(
