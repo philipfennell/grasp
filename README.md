@@ -8,8 +8,8 @@ SPARQL queries againts a Graph Store.
 The libraries provide means of managing and querying Graph Stores using the 
 W3C's Graph Store HTTP and SPARQL protocols respectively.
 
-(http://www.w3.org/TR/sparql11-http-rdf-update/)
-(<http://www.w3.org/TR/sparql11-protocol/)
+* http://www.w3.org/TR/sparql11-http-rdf-update/
+* http://www.w3.org/TR/sparql11-protocol/
 
 Both these specifications are currently (2012-01-11) working drafts so are 
 liable to change.
@@ -34,7 +34,7 @@ managing a Graph Store using that implements the Graph Store Protocol.
 All the libraries support accessing the defaul graph in the Graph Store and 
 have been tested against Jena's Fuseki SPARQL server.
 
-(http://openjena.org/wiki/Fuseki)
+http://openjena.org/wiki/Fuseki
 
 
 There are a series of tests in:
