@@ -11,4 +11,4 @@ declare namespace st 	= "http://www.w3.org/2007/SPARQL/protocol-types#";
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
 (: Returns the default graph as turtle. :)
-gsp:retrieve-default-graph(concat($test:SERVICE_URI, 'test/data'), 'text/turtle')
+gsp:retrieve-default-graph($test:DATA_ENDPOINT_URI, 'text/turtle')
