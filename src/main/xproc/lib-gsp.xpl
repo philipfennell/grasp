@@ -225,7 +225,7 @@ limitations under the License.</p:documentation>
 		<p:option name="graph" required="false" select="''"/>
 		<!--<p:option name="debug" required="false" select="'false'"/>-->
 		
-		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default=' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
+		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
 		
 		<gsp:submission method="head">
 			<p:with-option name="request-uri" select="concat($uri, if (contains($uri, '?')) then '&amp;' else '?', $params)"/>
@@ -248,7 +248,7 @@ limitations under the License.</p:documentation>
 		<p:option name="media-type" required="false" select="'application/rdf+xml'"/>
 		<!--<p:option name="debug" required="false" select="'false'"/>-->
 		
-		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default=' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
+		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
 		
 		<gsp:submission method="get">
 			<p:with-option name="request-uri" select="concat($uri, if (contains($uri, '?')) then '&amp;' else '?', $params)"/>
@@ -274,7 +274,7 @@ limitations under the License.</p:documentation>
 		<p:option name="slug" required="false" select="''"/>
 		<!--<p:option name="debug" required="false" select="'false'"/>-->
 		
-		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default=' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
+		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
 		
 		<gsp:graph-submission method="post">
 			<p:with-option name="request-uri" select="concat($uri, if (contains($uri, '?')) then '&amp;' else '?', $params)"/>
@@ -300,7 +300,7 @@ limitations under the License.</p:documentation>
 		<p:option name="graph" required="false" select="''"/>
 		<!--<p:option name="debug" required="false" select="'false'"/>-->
 		
-		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default=' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
+		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
 		
 		<gsp:graph-submission method="put">
 			<p:with-option name="request-uri" select="concat($uri, if (contains($uri, '?')) then '&amp;' else '?', $params)"/>
@@ -325,7 +325,7 @@ limitations under the License.</p:documentation>
 		<p:option name="graph" required="false" select="''"/>
 		<p:option name="debug" required="false" select="'false'"/>
 		
-		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default=' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
+		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
 		
 		<gsp:graph-submission method="patch">
 			<p:with-option name="request-uri" select="concat($uri, if (contains($uri, '?')) then '&amp;' else '?', $params)"/>
@@ -368,7 +368,7 @@ limitations under the License.</p:documentation>
 		<p:option name="graph" required="false" select="''"/>
 		<!--<p:option name="debug" required="false" select="'false'"/>-->
 		
-		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default=' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
+		<p:variable name="params" select="string-join((if ($default eq 'true') then 'default' else (), if (string-length($graph) gt 0) then concat('graph=', encode-for-uri($graph)) else ()), '&amp;')"/>
 		
 		<gsp:submission method="delete">
 			<p:with-option name="request-uri" select="concat($uri, if (contains($uri, '?')) then '&amp;' else '?', $params)"/>
