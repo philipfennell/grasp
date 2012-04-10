@@ -94,10 +94,11 @@
 		$graphURI as xs:string
 ) as  element(http:response)</pre></h4><p>Delete the named graph.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>graphURI as  xs:string the named graph URIs</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element containing HTTP metainfo.</li></ul></div><div id="func_gsp_delete-graph_3"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:delete-graph($uri as xs:string, $default as xs:boolean?, 
 		$graphURI as xs:string?
-) as  element(http:response)</pre></h4><p>Delete a graph.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>default as  xs:boolean? selects the 'default' graph.</li><li>graphURI as  xs:string? the named graph URIs</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element contains HTTP metainfo.</li></ul></div><div id="func_gsp_submission_6"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:submission($method as xs:string, $uri as xs:string, $default as xs:boolean?, 
+) as  element(http:response)</pre></h4><p>Delete a graph.</p><h5>Params</h5><ul><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>default as  xs:boolean? selects the 'default' graph.</li><li>graphURI as  xs:string? the named graph URIs</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element contains HTTP metainfo.</li></ul></div><div id="func_gsp_data_1"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:data($response as element(http:response)
+) as  item()*</pre></h4><p>Extracts the content of the response body or throws an error if the response XML fragment indicates an error response from the Graph Store.</p>GSP002 - Graph Store Reports an Error.<h5>Params</h5><ul><li>response as  element(http:response) the HTTP response fragment.</li></ul><h5>Returns</h5><ul><li> item()*: either an XML fragment or a string depending upon the response content-type.</li></ul></div><div id="func_gsp_submission_6"><h4><pre class="prettyprint lang-xq"><u>Function</u>: gsp:submission($method as xs:string, $uri as xs:string, $default as xs:boolean?, 
 		$graphURI as xs:string*, $mediaType as xs:string, $graphContent as item()?
 ) as  
-				element(http:request)</pre></h4><p>Builds an XML fragment that carries the request details.</p>GSP001 The default and graph parameters cannot be used together.<h5>Params</h5><ul><li>method as  xs:string HTTP method (HEAD|GET|POST|PUT|DELETE)</li><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>default as  xs:boolean? selects the 'default' graph.</li><li>graphURI as  xs:string* the named graph URIs</li><li>mediaType as  xs:string Media MIME-Type for the HTTP accpet header</li><li>graphContent as  item()? An RDF graph.</li></ul><h5>Returns</h5><ul><li> 
+				element(http:request)</pre></h4><p>Builds an XML fragment that carries the request details.</p>GSP001 - The default and graph parameters cannot be used together.<h5>Params</h5><ul><li>method as  xs:string HTTP method (HEAD|GET|POST|PUT|DELETE)</li><li>uri as  xs:string the URL of the target Graph Store end-point.</li><li>default as  xs:boolean? selects the 'default' graph.</li><li>graphURI as  xs:string* the named graph URIs</li><li>mediaType as  xs:string Media MIME-Type for the HTTP accpet header</li><li>graphContent as  item()? An RDF graph.</li></ul><h5>Returns</h5><ul><li> 
 				element(http:request): the HTTP request XML fragment.</li></ul></div></div><div><h3>Original Source Code</h3><pre class="prettyprint lang-xq">xquery version "1.0" encoding "utf-8";
 
 (:
@@ -392,6 +393,40 @@ declare (: private :) function gsp:delete-graph($uri as xs:string, $default as x
 
 
 (:~
+ : Extracts the content of the response body or throws an error if the response
+ : XML fragment indicates an error response from the Graph Store. 
+ : @param $response the HTTP response fragment.
+ : @return either an XML fragment or a string depending upon the response 
+ : content-type.
+ : @throws GSP002 - Graph Store Reports an Error.
+ :)
+declare function gsp:data($response as element(http:response))
+	as item()*
+{
+	(: 
+	 : If the response status code is less than 400 then assume all is well, 
+	 : otherwise throw an exception with the response message in it. 
+	 :)
+	if (number($response/@status) lt 400) then 
+		typeswitch ($response/http:body/(* | text())) 
+		case $body as text() 
+		return 
+			string($response/http:body/text())
+		default 
+		return
+			$response/http:body/*
+	else
+		error(
+			xs:QName('GSP002'), 
+			'Graph Store Reports an Error.',
+			string($response/http:body/text())
+		)
+};
+
+
+
+
+(:~
  : Builds an XML fragment that carries the request details.
  : @param $method HTTP method (HEAD|GET|POST|PUT|DELETE)
  : @param $uri the URL of the target Graph Store end-point. 
@@ -399,18 +434,18 @@ declare (: private :) function gsp:delete-graph($uri as xs:string, $default as x
  : @param $graphURI the named graph URIs
  : @param $mediaType Media MIME-Type for the HTTP accpet header
  : @param $graphContent An RDF graph.
- : @throws GSP001 The default and graph parameters cannot be used together.
+ : @throws GSP001 - The default and graph parameters cannot be used together.
  : @return the HTTP request XML fragment.
  :)
 declare (: private :) function gsp:submission($method as xs:string, $uri as xs:string, $default as xs:boolean?, 
 		$graphURI as xs:string*, $mediaType as xs:string, $graphContent as item()?) as 
 				element(http:request) 
 {
-	let $defaultParam as xs:string? := if ($default) then 'default=' else ()
+	let $defaultParam as xs:string? := if ($default) then 'default' else ()
 	let $namedGraphParam as xs:string? := if (string-length($graphURI) gt 0) then concat('graph=', $graphURI) else ()
 	let $requestParams as xs:string := string-join(($defaultParam, $namedGraphParam), '&amp;amp;')
 	return
-		if (matches($requestParams, 'default=') and matches($requestParams, 'graph=')) then 
+		if (matches($requestParams, 'default') and matches($requestParams, 'graph')) then 
 			error(
 				xs:QName('GSP001'), 
 				'The default and graph parameters cannot be used together.'

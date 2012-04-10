@@ -217,10 +217,11 @@ declare function impl:get-response-head($response as item()*)
 declare function impl:get-response-body($response as item()*) 
 		as item()?
 {
-	if (ends-with(string(impl:get-response-head($response)/xhttp:headers/xhttp:content-type), '+xml')) then
+	try {
 		xdmp:unquote(subsequence($response, 2))
-	else
+	} catch ($e) {
 		subsequence($response, 2, 1)
+	}
 };
 
 </pre></div><br/><div class="footer"><p style="text-align:right"><i/> |
