@@ -1,0 +1,230 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta http-equiv="Generator" content="xquerydoc - https://github.com/xquery/xquerydoc"/><title>xqDoc - </title><style type="text/css">
+          body {
+          font-family: Helvetica;
+          padding: 0.5em  1em;
+          }
+          pre {
+          font-family: Inconsolata, Consolas, monospace;
+          }
+          ol.results {
+          padding-left: 0;
+          }
+          .footer {
+          text-align:right;
+          border-top: solid 4px;
+          padding: 0.25em 0.5em;
+          font-size: 85%;
+          color: #999;
+          }
+          li.result {
+          list-style-position: inside;
+          list-style: none;
+          height:140px;
+          }
+          h2 {
+          display: inline-block;
+          margin: 0;
+          }
+
+          h2 a,
+          .result h3 a {
+          text-decoration: inherit;
+          color: inherit;
+          }
+          h3{
+	  font-size: 140%;
+	  background-color: #aaa;
+	  border-bottom: 1px solid #000;
+	  width: 100%;
+	  }
+          h4{
+	  font-size: 100%;
+	  background-color: #ddd;
+	  width: 90%;
+	  }
+
+          .namespace {
+          color: #999;
+          }
+          .namespace:before {
+          content: "{";
+          }
+          .namespace:after {
+          content: "}";
+          }
+          table{
+          width:75%;
+          float:right;
+          }
+          td {
+          height:100px;
+          width:50%;
+          vertical-align:text-top;
+          }
+        </style><script src="lib/prettify.js" type="text/javascript"> </script><script src="lib/lang-xq.js" type="text/javascript"> </script><link rel="stylesheet" type="text/css" href="lib/prettify.css"/></head><body class="home"><div id="main"><h1><span class="namespace">http://www.marklogic.com/http</span>  library module </h1><p>This library module provides MarkLogic spcific XQuery implementation features such as HTTP GET and POST requests and XML parsing.</p><p>Author:  Philip A. R. Fennell </p><div id="variables"><h3>Variables</h3><div id="var_URL_ENCODED"><h4><pre class="prettyprint lang-xq"><u>Variable</u>: $URL_ENCODED as  xs:string</pre></h4><p>URL encoding for HTTP requests.</p></div></div><div id="functions"><h3>Functions</h3><div id="func_impl_http-request_1"><h4><pre class="prettyprint lang-xq"><u>Function</u>: impl:http-request($request as element(http:request)
+) as  item()*</pre></h4><p>The HTTP binding for query operation.</p><h5>Params</h5><ul><li>request as  element(http:request)</li></ul><h5>Returns</h5><ul><li> item()*: the normalised response.</li></ul></div><div id="func_impl_normalise-response_1"><h4><pre class="prettyprint lang-xq"><u>Function</u>: impl:normalise-response($response as item()*
+) as  element(http:response)</pre></h4><p>Converts the implementation specific representation of the HTTP response into a generic HTTP representation which uses the same structure as XProc's c:response element.</p><h5>Params</h5><ul><li>response as  item()*</li></ul><h5>Returns</h5><ul><li> element(http:response): an http:response element</li></ul></div><div id="func_impl_unquote_1"><h4><pre class="prettyprint lang-xq"><u>Function</u>: impl:unquote($string as xs:string
+) as  document-node()</pre></h4><p>Parses a string as XML, returning one or more document nodes.</p><h5>Params</h5><ul><li>string as  xs:string Input to be unquoted.</li></ul><h5>Returns</h5><ul><li> document-node(): an XML document node.</li></ul></div><div id="func_impl_quote_1"><h4><pre class="prettyprint lang-xq"><u>Function</u>: impl:quote($node as node()
+) as  xs:string</pre></h4><p>Parses a string as XML, returning one or more document nodes.</p><h5>Params</h5><ul><li>node as  node()</li></ul><h5>Returns</h5><ul><li> xs:string: an XML document node.</li></ul></div><div id="func_impl_build-request-options_1"><h4><pre class="prettyprint lang-xq"><u>Function</u>: impl:build-request-options($request as element(http:request)
+) as  element(xhttp:options)</pre></h4><p>Creates the HTTP Request options XML fragment</p><h5>Params</h5><ul><li>request as  element(http:request)</li></ul><h5>Returns</h5><ul><li> element(xhttp:options): options element</li></ul></div><div id="func_impl_get-response-head_1"><h4><pre class="prettyprint lang-xq"><u>Function</u>: impl:get-response-head($response as item()*
+) as  element(xhttp:response)</pre></h4><p>Extract the head of the HTTP resonse data.</p><h5>Params</h5><ul><li>response as  item()*</li></ul><h5>Returns</h5><ul><li> element(xhttp:response): the head of the HTTP response data.</li></ul></div><div id="func_impl_get-response-body_1"><h4><pre class="prettyprint lang-xq"><u>Function</u>: impl:get-response-body($response as item()*
+) as  item()?</pre></h4><p>Extract the body of the HTTP resonse data.</p><h5>Params</h5><ul><li>response as  item()*</li></ul><h5>Returns</h5><ul><li> item()?: a sequence of zero or more HTTP response body items.</li></ul></div></div><div><h3>Original Source Code</h3><pre class="prettyprint lang-xq">xquery version "1.0-ml" encoding "utf-8";
+
+(:
+ : Licensed under the Apache License, Version 2.0 (the "License");
+ : you may not use this file except in compliance with the License.
+ : You may obtain a copy of the License at
+ :
+ :     http://www.apache.org/licenses/LICENSE-2.0
+ :
+ : Unless required by applicable law or agreed to in writing, software
+ : distributed under the License is distributed on an "AS IS" BASIS,
+ : WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ : See the License for the specific language governing permissions and
+ : limitations under the License.
+ :)
+
+(:~
+ : This library module provides MarkLogic spcific XQuery implementation features
+ : such as HTTP GET and POST requests and XML parsing.
+ : @author Philip A. R. Fennell
+ :)
+
+module namespace impl = "http://www.marklogic.com/http";
+
+declare default function namespace "http://www.w3.org/2005/xpath-functions";
+declare default element namespace "http://www.w3.org/Protocols/rfc2616"; 
+
+declare namespace http = "http://www.w3.org/Protocols/rfc2616"; 
+declare namespace xhttp = "xdmp:http";
+
+(:~ URL encoding for HTTP requests. :)
+declare variable $URL_ENCODED 	as xs:string := "application/x-www-form-urlencoded";
+
+
+(:~
+ : The HTTP binding for query operation.
+ : @param $request
+ : @return the normalised response.
+ :)
+declare function impl:http-request($request as element(http:request))
+				as item()*
+{
+	let $requestURI as xs:string := $request/@href
+	let $method as xs:string := $request/@method
+	let $log := xdmp:log(concat('[XQuery][GRASP] Request:&amp;#10;', xdmp:quote($request)), 'debug')
+	let $response as item()* := 
+		xdmp:apply(
+			xdmp:function(xs:QName(concat('xdmp:http-', lower-case($method)))), 
+			$requestURI, 
+			impl:build-request-options($request)
+		)
+	return
+		$response
+};
+
+
+(:~
+ : Converts the implementation specific representation of the HTTP response into
+ : a generic HTTP representation which uses the same structure as XProc's c:response element.
+ : @param $response
+ : @return an http:response element
+ :)
+declare function impl:normalise-response($response as item()*) 
+	as element(http:response) 
+{
+	&lt;response status="{string(impl:get-response-head($response)/xhttp:code)}"&gt;{
+		(for $header in impl:get-response-head($response)/xhttp:headers/xhttp:*
+		return
+			&lt;header name="{local-name($header)}" value="{string($header)}"/&gt;),
+		if (exists(impl:get-response-body($response))) then 
+			&lt;body content-type="{subsequence(tokenize(string(impl:get-response-head($response)/xhttp:headers/xhttp:content-type), ';'), 1, 1)}"&gt;{
+				impl:get-response-body($response)
+			}&lt;/body&gt;
+		else
+			()
+	}&lt;/response&gt;
+}; 
+
+
+(:~
+ : Parses a string as XML, returning one or more document nodes.
+ : @param $string Input to be unquoted.
+ : @return an XML document node. 
+ :)
+declare function impl:unquote($string as xs:string) 
+		as document-node() 
+{
+	xdmp:unquote($string)
+}; 
+
+
+(:~
+ : Parses a string as XML, returning one or more document nodes.
+ : @param $string Input to be unquoted.
+ : @return an XML document node. 
+ :)
+declare function impl:quote($node as node()) 
+		as xs:string 
+{
+	xdmp:quote($node)
+}; 
+
+
+
+(:~
+ : Creates the HTTP Request options XML fragment
+ : @param $accept the HTTP Accept header content-type.
+ : @return options element
+ :)
+declare function impl:build-request-options($request as element(http:request)) 
+		as element(xhttp:options) 
+{
+	&lt;options xmlns="xdmp:http"&gt;
+		&lt;headers&gt;{
+			for $header in $request//http:header
+			return
+				element {QName('xdmp:http', string($header/@name))} {text {string($header/@value)}}
+		}&lt;/headers&gt;
+		&lt;format xmlns="xdmp:document-get"&gt;text&lt;/format&gt;
+		{
+		if (exists($request/http:body)) then 
+			&lt;data xmlns="xdmp:http"&gt;{xdmp:quote($request/http:body/*)}&lt;/data&gt;
+		else
+			()
+		}
+	&lt;/options&gt;
+};
+
+
+(:~
+ : Extract the head of the HTTP resonse data.
+ : @param $response
+ : @return the head of the HTTP response data.
+ :)
+declare function impl:get-response-head($response as item()*) 
+		as element(xhttp:response)
+{
+	subsequence($response, 1, 1)
+};
+
+
+(:~
+ : Extract the body of the HTTP resonse data.
+ : @param $response
+ : @return a sequence of zero or more HTTP response body items.
+ :)
+declare function impl:get-response-body($response as item()*) 
+		as item()?
+{
+	try {
+		xdmp:unquote(subsequence($response, 2))
+	} catch ($e) {
+		subsequence($response, 2, 1)
+	}
+};
+
+</pre></div><br/><div class="footer"><p style="text-align:right"><i/> |
+          generated by xquerydoc <a href="https://github.com/xquery/xquerydoc" target="xquerydoc">https://github.com/xquery/xquerydoc</a></p></div></div><script type="application/javascript">
+	  window.onload = function(){ prettyPrint(); }
+	</script></body></html>

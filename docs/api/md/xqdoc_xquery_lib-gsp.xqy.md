@@ -4,7 +4,7 @@
 ## Table of Contents
 
 * Variables: [$USER_AGENT](#var_USER_AGENT), [$RDF_XML](#var_RDF_XML), [$NTRIPLES](#var_NTRIPLES), [$TURTLE](#var_TURTLE)
-* Functions: [gsp:retrieve-default-graph-metainfo\#1](#func_gsp_retrieve-default-graph-metainfo_1), [gsp:retrieve-named-graph-metainfo\#2](#func_gsp_retrieve-named-graph-metainfo_2), [gsp:retrieve-graph-metainfo\#3](#func_gsp_retrieve-graph-metainfo_3), [gsp:retrieve-default-graph\#1](#func_gsp_retrieve-default-graph_1), [gsp:retrieve-default-graph\#2](#func_gsp_retrieve-default-graph_2), [gsp:retrieve-named-graph\#2](#func_gsp_retrieve-named-graph_2), [gsp:retrieve-named-graph\#3](#func_gsp_retrieve-named-graph_3), [gsp:retrieve-graph\#4](#func_gsp_retrieve-graph_4), [gsp:merge-default-graph\#2](#func_gsp_merge-default-graph_2), [gsp:merge-named-graph\#3](#func_gsp_merge-named-graph_3), [gsp:merge-graph\#4](#func_gsp_merge-graph_4), [gsp:add-default-graph\#2](#func_gsp_add-default-graph_2), [gsp:add-named-graph\#3](#func_gsp_add-named-graph_3), [gsp:add-graph\#4](#func_gsp_add-graph_4), [gsp:delete-default-graph\#1](#func_gsp_delete-default-graph_1), [gsp:delete-named-graph\#2](#func_gsp_delete-named-graph_2), [gsp:delete-graph\#3](#func_gsp_delete-graph_3), [gsp:submission\#6](#func_gsp_submission_6)
+* Functions: [gsp:retrieve-default-graph-metainfo\#1](#func_gsp_retrieve-default-graph-metainfo_1), [gsp:retrieve-named-graph-metainfo\#2](#func_gsp_retrieve-named-graph-metainfo_2), [gsp:retrieve-graph-metainfo\#3](#func_gsp_retrieve-graph-metainfo_3), [gsp:retrieve-default-graph\#1](#func_gsp_retrieve-default-graph_1), [gsp:retrieve-default-graph\#2](#func_gsp_retrieve-default-graph_2), [gsp:retrieve-named-graph\#2](#func_gsp_retrieve-named-graph_2), [gsp:retrieve-named-graph\#3](#func_gsp_retrieve-named-graph_3), [gsp:retrieve-graph\#4](#func_gsp_retrieve-graph_4), [gsp:merge-default-graph\#2](#func_gsp_merge-default-graph_2), [gsp:merge-named-graph\#3](#func_gsp_merge-named-graph_3), [gsp:merge-graph\#4](#func_gsp_merge-graph_4), [gsp:add-default-graph\#2](#func_gsp_add-default-graph_2), [gsp:add-named-graph\#3](#func_gsp_add-named-graph_3), [gsp:add-graph\#4](#func_gsp_add-graph_4), [gsp:delete-default-graph\#1](#func_gsp_delete-default-graph_1), [gsp:delete-named-graph\#2](#func_gsp_delete-named-graph_2), [gsp:delete-graph\#3](#func_gsp_delete-graph_3), [gsp:data\#1](#func_gsp_data_1), [gsp:submission\#6](#func_gsp_submission_6)
 
 
 ## Variables
@@ -375,6 +375,22 @@ gsp:delete-graph($uri as xs:string, $default as xs:boolean?,
 #### Returns
 *  element(http:response): an http:response element contains HTTP metainfo.
 
+### <a name="func_gsp_data_1"/> gsp:data\#1
+```xquery
+gsp:data($response as element(http:response)
+) as  item()*
+```
+  Extracts the content of the response body or throws an error if the response  XML fragment indicates an error response from the Graph Store.   
+
+ GSP002 - Graph Store Reports an Error. 
+#### Params
+
+* $response as  element(http:response) the HTTP response fragment.
+
+
+#### Returns
+*  item()\*: either an XML fragment or a string depending upon the response content-type.
+
 ### <a name="func_gsp_submission_6"/> gsp:submission\#6
 ```xquery
 gsp:submission($method as xs:string, $uri as xs:string, $default as xs:boolean?, 
@@ -384,7 +400,7 @@ gsp:submission($method as xs:string, $uri as xs:string, $default as xs:boolean?,
 ```
   Builds an XML fragment that carries the request details.  
 
- GSP001 The default and graph parameters cannot be used together.  
+ GSP001 - The default and graph parameters cannot be used together.  
 #### Params
 
 * $method as  xs:string HTTP method (HEAD|GET|POST|PUT|DELETE)
