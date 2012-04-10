@@ -292,6 +292,34 @@ declare (: private :) function gsp:delete-graph($uri as xs:string, $default as x
 
 
 (:~
+ : Extracts the content of the response body. 
+ : @param $response the HTTP response fragment.
+ : @return either an XML fragment or a string depending upon the response 
+ : content-type.
+ :)
+declare function gsp:data($response as element(http:response))
+	as item()*
+{
+	if (number($response/@status) lt 400) then 
+		typeswitch ($response/http:body/(* | text())) 
+		case $body as text() 
+		return 
+			string($response/http:body/text())
+		default 
+		return
+			$response/http:body/*
+	else
+		error(
+			xs:QName('GSP002'), 
+			'Graph Store Reports an Error.',
+			string($response/http:body/text())
+		)
+};
+
+
+
+
+(:~
  : Builds an XML fragment that carries the request details.
  : @param $method HTTP method (HEAD|GET|POST|PUT|DELETE)
  : @param $uri the URL of the target Graph Store end-point. 
@@ -306,11 +334,11 @@ declare (: private :) function gsp:submission($method as xs:string, $uri as xs:s
 		$graphURI as xs:string*, $mediaType as xs:string, $graphContent as item()?) as 
 				element(http:request) 
 {
-	let $defaultParam as xs:string? := if ($default) then 'default=' else ()
+	let $defaultParam as xs:string? := if ($default) then 'default' else ()
 	let $namedGraphParam as xs:string? := if (string-length($graphURI) gt 0) then concat('graph=', $graphURI) else ()
 	let $requestParams as xs:string := string-join(($defaultParam, $namedGraphParam), '&amp;')
 	return
-		if (matches($requestParams, 'default=') and matches($requestParams, 'graph=')) then 
+		if (matches($requestParams, 'default') and matches($requestParams, 'graph')) then 
 			error(
 				xs:QName('GSP001'), 
 				'The default and graph parameters cannot be used together.'
