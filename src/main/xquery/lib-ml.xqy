@@ -147,10 +147,6 @@ declare function impl:get-response-head($response as item()*)
 declare function impl:get-response-body($response as item()*) 
 		as item()?
 {
-	(:if (ends-with(subsequence(tokenize(string(impl:get-response-head($response)/xhttp:headers/xhttp:content-type), ';'), 1, 1), '+xml')) then
-		xdmp:unquote(subsequence($response, 2))
-	else
-		subsequence($response, 2, 1):)
 	try {
 		xdmp:unquote(subsequence($response, 2))
 	} catch ($e) {
