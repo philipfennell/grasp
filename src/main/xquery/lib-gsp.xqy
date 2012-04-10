@@ -292,14 +292,20 @@ declare (: private :) function gsp:delete-graph($uri as xs:string, $default as x
 
 
 (:~
- : Extracts the content of the response body. 
+ : Extracts the content of the response body or throws an error if the response
+ : XML fragment indicates an error response from the Graph Store. 
  : @param $response the HTTP response fragment.
  : @return either an XML fragment or a string depending upon the response 
  : content-type.
+ : @throws GSP002 - Graph Store Reports an Error.
  :)
 declare function gsp:data($response as element(http:response))
 	as item()*
 {
+	(: 
+	 : If the response status code is less than 400 then assume all is well, 
+	 : otherwise throw an exception with the response message in it. 
+	 :)
 	if (number($response/@status) lt 400) then 
 		typeswitch ($response/http:body/(* | text())) 
 		case $body as text() 
@@ -327,7 +333,7 @@ declare function gsp:data($response as element(http:response))
  : @param $graphURI the named graph URIs
  : @param $mediaType Media MIME-Type for the HTTP accpet header
  : @param $graphContent An RDF graph.
- : @throws GSP001 The default and graph parameters cannot be used together.
+ : @throws GSP001 - The default and graph parameters cannot be used together.
  : @return the HTTP request XML fragment.
  :)
 declare (: private :) function gsp:submission($method as xs:string, $uri as xs:string, $default as xs:boolean?, 
