@@ -11,7 +11,7 @@ declare namespace st 	= "http://www.w3.org/2007/SPARQL/protocol-types#";
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
 (: Merges the passed graph into the default graph. :)
-gsp:merge-named-graph($test:DATA_ENDPOINT_URI, 'http://www.books.com/harry-potter',
+gsp:merge-default-graph($test:DATA_ENDPOINT_URI, 
 	<rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/"
 			xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
 		<rdf:Description rdf:about="http://example.org/book/book3">

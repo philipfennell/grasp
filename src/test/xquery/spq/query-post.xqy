@@ -10,7 +10,7 @@ declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
 (:  :)
 spq:query-post(
-	concat($test:SERVICE_URI, 'test/query'), 
+	$test:QUERY_ENDPOINT_URI, 
 	(),
 	(),
 	'SELECT * {?s ?p ?o} LIMIT 10'

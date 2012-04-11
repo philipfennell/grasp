@@ -11,7 +11,7 @@ declare namespace st 	= "http://www.w3.org/2007/SPARQL/protocol-types#";
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
 (: Replaces the default graph with this graph. :)
-gsp:add-default-graph(concat($test:SERVICE_URI, 'test/data'), 
+gsp:add-default-graph($test:DATA_ENDPOINT_URI, 
 	<rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/"
 			xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 			xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">

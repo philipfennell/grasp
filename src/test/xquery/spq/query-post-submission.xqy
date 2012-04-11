@@ -11,9 +11,9 @@ declare default function namespace "http://www.w3.org/2005/xpath-functions";
 (: Returns the request fragment. :)
 spq:submission(
 	'post',
-	concat($test:SERVICE_URI, 'test/query'), 
+	$test:QUERY_ENDPOINT_URI, 
 	(),
 	(),
-	'application/sparql-results+xml',
-	'SELECT * {?s ?p ?o} LIMIT 10'
+	'SELECT * {?s ?p ?o} LIMIT 10',
+	'application/sparql-results+xml'
 )

@@ -9,10 +9,11 @@ import module namespace test = "http://www.w3.org/TR/sparql11-protocol/test" at
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
 (:  :)
-spq:query-get(
+spq:query(
 	$test:QUERY_ENDPOINT_URI, 
 	(),
 	(),
-	'SELECT * {?s ?p ?o} LIMIT 10',
-	'text/csv'
+	'SELECT * 
+	 {?s ?p ?o} 
+	 LIMIT 10'
 )

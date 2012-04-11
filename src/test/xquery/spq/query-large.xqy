@@ -8,11 +8,18 @@ import module namespace test = "http://www.w3.org/TR/sparql11-protocol/test" at
 
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
-(:  :)
-spq:query-get(
-	$test:QUERY_ENDPOINT_URI, 
-	(),
-	(),
-	'SELECT * {?s ?p ?o} LIMIT 10',
-	'text/csv'
-)
+
+let $padding as xs:string := 
+	string-join((for $line in 1 to (($spq:MAX_REQUEST_URI_LENGTH idiv 10) + 1)
+	return
+		'#123456789&#10;'), '')
+return
+	spq:query(
+		$test:QUERY_ENDPOINT_URI, 
+		(),
+		(),
+		concat($padding,
+		 'SELECT * 
+		 {?s ?p ?o} 
+		 LIMIT 10')
+	)
