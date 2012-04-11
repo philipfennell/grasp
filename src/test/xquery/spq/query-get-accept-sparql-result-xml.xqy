@@ -14,5 +14,5 @@ spq:query-get(
 	(),
 	(),
 	'SELECT * {?s ?p ?o} LIMIT 10',
-	'application/sparql-results+xml'
+	$spq:SPARQL_RESULTS_XML
 )

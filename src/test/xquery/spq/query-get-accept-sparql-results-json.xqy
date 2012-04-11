@@ -14,5 +14,5 @@ spq:query-get(
 	(),
 	(),
 	'SELECT * {?s ?p ?o} LIMIT 10',
-	$spq:CSV
+	$spq:SPARQL_RESULTS_JSON
 )

@@ -33,7 +33,10 @@ declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
 (:~ Request encodings. :)
 declare variable $SPARQL_RESULTS_XML	as xs:string := "application/sparql-results+xml";
+declare variable $SPARQL_RESULTS_JSON	as xs:string := "application/sparql-results+json";
 declare variable $RDF_XML 				as xs:string := "application/rdf+xml";
+declare variable $TSV 					as xs:string := "text/tab-separated-values";
+declare variable $CSV 					as xs:string := "text/csv";
 
 (:~ User-agent string. :) 
 declare variable $USER_AGENT	as xs:string := "xqy-sparql-protocol-client/0.4";

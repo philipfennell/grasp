@@ -14,5 +14,5 @@ spq:query-post(
 	(),
 	(),
 	'SELECT * {?s ?p ?o} LIMIT 10',
-	'text/csv'
+	$spq:CSV
 )
