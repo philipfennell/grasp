@@ -31,7 +31,7 @@ declare default function namespace "http://www.w3.org/2005/xpath-functions";
 declare namespace http = "http://www.w3.org/Protocols/rfc2616"; 
 
 (:~ User-agent string. :) 
-declare variable $USER_AGENT	as xs:string := "xqy-graph-store-http-protocol-client/0.2";
+declare variable $USER_AGENT	as xs:string := "xqy-graph-store-http-protocol-client/0.3";
 
 (:~ MIME-Types. :)
 declare variable $RDF_XML 		as xs:string := "application/rdf+xml";
