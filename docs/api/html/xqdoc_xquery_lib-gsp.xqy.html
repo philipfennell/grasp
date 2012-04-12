@@ -442,7 +442,7 @@ declare (: private :) function gsp:submission($method as xs:string, $uri as xs:s
 				element(http:request) 
 {
 	let $defaultParam as xs:string? := if ($default) then 'default' else ()
-	let $namedGraphParam as xs:string? := if (string-length($graphURI) gt 0) then concat('graph=', $graphURI) else ()
+	let $namedGraphParam as xs:string? := if (string-length($graphURI) gt 0) then concat('graph=', encode-for-uri($graphURI)) else ()
 	let $requestParams as xs:string := string-join(($defaultParam, $namedGraphParam), '&amp;amp;')
 	return
 		if (matches($requestParams, 'default') and matches($requestParams, 'graph')) then 

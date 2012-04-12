@@ -61,22 +61,29 @@
           width:50%;
           vertical-align:text-top;
           }
-        </style><script src="lib/prettify.js" type="text/javascript"> </script><script src="lib/lang-xq.js" type="text/javascript"> </script><link rel="stylesheet" type="text/css" href="lib/prettify.css"/></head><body class="home"><div id="main"><h1><span class="namespace">http://www.w3.org/TR/sparql11-protocol/</span>  library module </h1><div id="variables"><h3>Variables</h3><div id="var_SPARQL_RESULTS_XML"><h4><pre class="prettyprint lang-xq"><u>Variable</u>: $SPARQL_RESULTS_XML as  xs:string</pre></h4><p>Request encodings.</p></div><div id="var_RDF_XML"><h4><pre class="prettyprint lang-xq"><u>Variable</u>: $RDF_XML as  xs:string</pre></h4></div><div id="var_USER_AGENT"><h4><pre class="prettyprint lang-xq"><u>Variable</u>: $USER_AGENT as  xs:string</pre></h4><p>User-agent string.</p></div></div><div id="functions"><h3>Functions</h3><div id="func_spq_query-get_4"><h4><pre class="prettyprint lang-xq"><u>Function</u>: spq:query-get($endPointURI as xs:string, 
+        </style><script src="lib/prettify.js" type="text/javascript"> </script><script src="lib/lang-xq.js" type="text/javascript"> </script><link rel="stylesheet" type="text/css" href="lib/prettify.css"/></head><body class="home"><div id="main"><h1><span class="namespace">http://www.w3.org/TR/sparql11-protocol/</span>  library module </h1><div id="variables"><h3>Variables</h3><div id="var_SPARQL_RESULTS_XML"><h4><pre class="prettyprint lang-xq"><u>Variable</u>: $SPARQL_RESULTS_XML as  xs:string</pre></h4><p>Request encodings.</p></div><div id="var_SPARQL_RESULTS_JSON"><h4><pre class="prettyprint lang-xq"><u>Variable</u>: $SPARQL_RESULTS_JSON as  xs:string</pre></h4></div><div id="var_RDF_XML"><h4><pre class="prettyprint lang-xq"><u>Variable</u>: $RDF_XML as  xs:string</pre></h4></div><div id="var_TSV"><h4><pre class="prettyprint lang-xq"><u>Variable</u>: $TSV as  xs:string</pre></h4></div><div id="var_CSV"><h4><pre class="prettyprint lang-xq"><u>Variable</u>: $CSV as  xs:string</pre></h4></div><div id="var_USER_AGENT"><h4><pre class="prettyprint lang-xq"><u>Variable</u>: $USER_AGENT as  xs:string</pre></h4><p>User-agent string.</p></div><div id="var_MAX_REQUEST_URI_LENGTH"><h4><pre class="prettyprint lang-xq"><u>Variable</u>: $MAX_REQUEST_URI_LENGTH as  xs:integer</pre></h4><p>Maximum request URI length.</p></div></div><div id="functions"><h3>Functions</h3><div id="func_spq_data_1"><h4><pre class="prettyprint lang-xq"><u>Function</u>: spq:data($response as element(http:response)
+) as  item()*</pre></h4><p>Extracts the content of the response body or throws an error if the response XML fragment indicates an error response from the Graph Store.</p>GSP002 - Graph Store Reports an Error.<h5>Params</h5><ul><li>response as  element(http:response) the HTTP response fragment.</li></ul><h5>Returns</h5><ul><li> item()*: either an XML fragment or a string depending upon the response content-type.</li></ul></div><div id="func_spq_query_5"><h4><pre class="prettyprint lang-xq"><u>Function</u>: spq:query($endPointURI as xs:string, 
+		$defaultGraphURIs as xs:string*, $namedGraphURIs as xs:string*, 
+				$query as xs:string, $mediaType as xs:string
+) as  element(http:response)</pre></h4><p>The HTTP binding for query operation. If the requests length is greater than the predefined threshold the POST is used instead of GET.</p><h5>Params</h5><ul><li>endPointURI as  xs:string the URL of the target SPARQL end-point.</li><li>defaultGraphURIs as  xs:string* the default graph URIs</li><li>namedGraphURIs as  xs:string* the named graph URIs</li><li>query as  xs:string the SPARQL query to be sent.</li><li>mediaType as  xs:string the Media MIME-Type for the HTTP accept header.</li></ul><h5>Returns</h5><ul><li> element(http:response): </li></ul></div><div id="func_spq_query_4"><h4><pre class="prettyprint lang-xq"><u>Function</u>: spq:query($endPointURI as xs:string, 
+		$defaultGraphURIs as xs:string*, $namedGraphURIs as xs:string*, 
+				$query as xs:string
+) as  element(http:response)</pre></h4><p>The HTTP binding for query operation. Assumes the default Accept header for the SPARQL XML Results format. If the requests length is greater than the predefined threshold the POST is used instead of GET.</p><h5>Params</h5><ul><li>endPointURI as  xs:string the URL of the target SPARQL end-point.</li><li>defaultGraphURIs as  xs:string* the default graph URIs</li><li>namedGraphURIs as  xs:string* the named graph URIs</li><li>query as  xs:string the SPARQL query to be sent.</li></ul><h5>Returns</h5><ul><li> element(http:response): the query response wrapped in an query-result element that carries the response content type.</li></ul></div><div id="func_spq_query-get_4"><h4><pre class="prettyprint lang-xq"><u>Function</u>: spq:query-get($endPointURI as xs:string, 
 		$defaultGraphURIs as xs:string*, $namedGraphURIs as xs:string*, 
 				$query as xs:string
 ) as  element(http:response)</pre></h4><p>The HTTP GET binding for query operation. Assumes the default Accept header for the SPARQL XML Results format.</p><h5>Params</h5><ul><li>endPointURI as  xs:string the URL of the target SPARQL end-point.</li><li>defaultGraphURIs as  xs:string* the default graph URIs</li><li>namedGraphURIs as  xs:string* the named graph URIs</li><li>query as  xs:string the SPARQL query to be sent.</li></ul><h5>Returns</h5><ul><li> element(http:response): the query response wrapped in an query-result element that carries the response content type.</li></ul></div><div id="func_spq_query-get_5"><h4><pre class="prettyprint lang-xq"><u>Function</u>: spq:query-get($endPointURI as xs:string, 
 		$defaultGraphURIs as xs:string*, $namedGraphURIs as xs:string*, 
-				$mediaType as xs:string, $query as xs:string
-) as  element(http:response)</pre></h4><p>The HTTP GET binding for query operation.</p><h5>Params</h5><ul><li>endPointURI as  xs:string the URL of the target SPARQL end-point.</li><li>defaultGraphURIs as  xs:string* the default graph URIs</li><li>namedGraphURIs as  xs:string* the named graph URIs</li><li>mediaType as  xs:string the Media MIME-Type for the HTTP accept header.</li><li>query as  xs:string the SPARQL query to be sent.</li></ul><h5>Returns</h5><ul><li> element(http:response): the query response wrapped in an query-result element that carries the response content type.</li></ul></div><div id="func_spq_query-post_4"><h4><pre class="prettyprint lang-xq"><u>Function</u>: spq:query-post($endPointURI as xs:string,
+				$query as xs:string, $mediaType as xs:string
+) as  element(http:response)</pre></h4><p>The HTTP GET binding for query operation.</p><h5>Params</h5><ul><li>endPointURI as  xs:string the URL of the target SPARQL end-point.</li><li>defaultGraphURIs as  xs:string* the default graph URIs</li><li>namedGraphURIs as  xs:string* the named graph URIs</li><li>query as  xs:string the SPARQL query to be sent.</li><li>mediaType as  xs:string the Media MIME-Type for the HTTP accept header.</li></ul><h5>Returns</h5><ul><li> element(http:response): the query response wrapped in an query-result element that carries the response content type.</li></ul></div><div id="func_spq_query-post_4"><h4><pre class="prettyprint lang-xq"><u>Function</u>: spq:query-post($endPointURI as xs:string,
 		$defaultGraphURIs as xs:string*, 
 				$namedGraphURIs as xs:string*, $query as xs:string
 ) as  element(http:response)</pre></h4><p>The HTTP GET binding for query operation. Assumes the default Accept header for the SPARQL XML Results format.</p><h5>Params</h5><ul><li>endPointURI as  xs:string the URL of the target SPARQL end-point.</li><li>defaultGraphURIs as  xs:string* the default graph URIs</li><li>namedGraphURIs as  xs:string* the named graph URIs</li><li>query as  xs:string the SPARQL query to be sent.</li></ul><h5>Returns</h5><ul><li> element(http:response): the query response wrapped in an query-result element that carries the response content type.</li></ul></div><div id="func_spq_query-post_5"><h4><pre class="prettyprint lang-xq"><u>Function</u>: spq:query-post($endPointURI as xs:string,
 		$defaultGraphURIs as xs:string*, $namedGraphURIs as xs:string*, 
-				$mediaType as xs:string, $query as xs:string
-) as  element(http:response)</pre></h4><p>The HTTP GET binding for query operation. Assumes the default Accept header for the SPARQL XML Results format.</p><h5>Params</h5><ul><li>endPointURI as  xs:string the URL of the target SPARQL end-point.</li><li>defaultGraphURIs as  xs:string* the default graph URIs</li><li>namedGraphURIs as  xs:string* the named graph URIs</li><li>mediaType as  xs:string the Media MIME-Type for the HTTP accept header.</li><li>query as  xs:string the SPARQL query to be sent.</li></ul><h5>Returns</h5><ul><li> element(http:response): the query response wrapped in an query-result element that carries the response content type.</li></ul></div><div id="func_spq_submission_6"><h4><pre class="prettyprint lang-xq"><u>Function</u>: spq:submission($method as xs:string, $endpoitURI as xs:string, $defaultGraphURIs as xs:string*, 
-		$namedGraphURIs as xs:string*, $mediaType as xs:string, $query as item()?
+				$query as xs:string, $mediaType as xs:string
+) as  element(http:response)</pre></h4><p>The HTTP GET binding for query operation. Assumes the default Accept header for the SPARQL XML Results format.</p><h5>Params</h5><ul><li>endPointURI as  xs:string the URL of the target SPARQL end-point.</li><li>defaultGraphURIs as  xs:string* the default graph URIs</li><li>namedGraphURIs as  xs:string* the named graph URIs</li><li>query as  xs:string the SPARQL query to be sent.</li><li>mediaType as  xs:string the Media MIME-Type for the HTTP accept header.</li></ul><h5>Returns</h5><ul><li> element(http:response): the query response wrapped in an query-result element that carries the response content type.</li></ul></div><div id="func_(_ private _) spq_submission_6"><h4><pre class="prettyprint lang-xq"><u>Function</u>: (: private :) spq:submission($method as xs:string, $endpoitURI as xs:string, $defaultGraphURIs as xs:string*, 
+		$namedGraphURIs as xs:string*, $query as item()?, $mediaType as xs:string
 ) as  
-				element(http:request)</pre></h4><p>Builds an XML fragment that carries the request details.</p><h5>Params</h5><ul><li>method as  xs:string HTTP method (GET|POST)</li><li>endpoitURI as  xs:string</li><li>defaultGraphURIs as  xs:string* the default graph URIs</li><li>namedGraphURIs as  xs:string* the named graph URIs</li><li>mediaType as  xs:string Media MIME-Type for the HTTP accpet header</li><li>query as  item()? An RDF graph.</li></ul><h5>Returns</h5><ul><li> 
+				element(http:request)</pre></h4><p>Builds an XML fragment that carries the request details.</p><h5>Params</h5><ul><li>method as  xs:string HTTP method (GET|POST)</li><li>endpoitURI as  xs:string</li><li>defaultGraphURIs as  xs:string* the default graph URIs.</li><li>namedGraphURIs as  xs:string* the named graph URIs.</li><li>query as  item()? An RDF graph.</li><li>mediaType as  xs:string Media MIME-Type for the HTTP accpet header.</li></ul><h5>Returns</h5><ul><li> 
 				element(http:request): the HTTP request XML fragment.</li></ul></div></div><div><h3>Original Source Code</h3><pre class="prettyprint lang-xq">xquery version "1.0" encoding "utf-8";
 
 (:
@@ -112,10 +119,96 @@ declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
 (:~ Request encodings. :)
 declare variable $SPARQL_RESULTS_XML	as xs:string := "application/sparql-results+xml";
+declare variable $SPARQL_RESULTS_JSON	as xs:string := "application/sparql-results+json";
 declare variable $RDF_XML 				as xs:string := "application/rdf+xml";
+declare variable $TSV 					as xs:string := "text/tab-separated-values";
+declare variable $CSV 					as xs:string := "text/csv";
 
 (:~ User-agent string. :) 
-declare variable $USER_AGENT	as xs:string := "xqy-sparql-protocol-client/0.3";
+declare variable $USER_AGENT	as xs:string := "xqy-sparql-protocol-client/0.4";
+
+(:~ Maximum request URI length. :)
+declare variable $MAX_REQUEST_URI_LENGTH as xs:integer := 256;
+
+
+(:~
+ : Extracts the content of the response body or throws an error if the response
+ : XML fragment indicates an error response from the Graph Store. 
+ : @param $response the HTTP response fragment.
+ : @return either an XML fragment or a string depending upon the response 
+ : content-type.
+ : @throws GSP002 - Graph Store Reports an Error.
+ :)
+declare function spq:data($response as element(http:response))
+	as item()*
+{
+	(: 
+	 : If the response status code is less than 400 then assume all is well, 
+	 : otherwise throw an exception with the response message in it. 
+	 :)
+	if (number($response/@status) lt 400) then 
+		typeswitch ($response/http:body/(* | text())) 
+		case $body as text() 
+		return 
+			string($response/http:body/text())
+		default 
+		return
+			$response/http:body/*
+	else
+		error(
+			xs:QName('SPQ002'), 
+			'SPARQL Endpoint Reports an Error.',
+			string($response/http:body/text())
+		)
+};
+
+
+(:~
+ : The HTTP binding for query operation. If the requests length is greater than 
+ : the predefined threshold the POST is used instead of GET.
+ : @param $endPointURI the URL of the target SPARQL end-point.
+ : @param $defaultGraphURIs the default graph URIs
+ : @param $namedGraphURIs the named graph URIs
+ : @param $query the SPARQL query to be sent.
+ : @param $mediaType the Media MIME-Type for the HTTP accept header.
+ : @return 
+ :)
+declare function spq:query($endPointURI as xs:string, 
+		$defaultGraphURIs as xs:string*, $namedGraphURIs as xs:string*, 
+				$query as xs:string, $mediaType as xs:string) 
+	as element(http:response)
+{
+	let $requestURI as xs:string := string(spq:submission('POST', $endPointURI, 
+			$defaultGraphURIs, $namedGraphURIs, $query, $mediaType)/@href)
+	return
+		if (string-length($requestURI) gt $MAX_REQUEST_URI_LENGTH) then 
+			spq:query-post($endPointURI, $defaultGraphURIs, $namedGraphURIs,
+				$query, $mediaType)
+		else
+			spq:query-get($endPointURI, $defaultGraphURIs, $namedGraphURIs,
+				$query, $mediaType)
+};
+
+
+(:~
+ : The HTTP binding for query operation. Assumes the default Accept header
+ : for the SPARQL XML Results format. If the requests length is greater than 
+ : the predefined threshold the POST is used instead of GET.
+ : @param $endPointURI the URL of the target SPARQL end-point.
+ : @param $defaultGraphURIs the default graph URIs
+ : @param $namedGraphURIs the named graph URIs
+ : @param $query the SPARQL query to be sent.
+ : @return the query response wrapped in an query-result element that carries 
+ : the response content type.
+ :)
+declare function spq:query($endPointURI as xs:string, 
+		$defaultGraphURIs as xs:string*, $namedGraphURIs as xs:string*, 
+				$query as xs:string) 
+	as element(http:response)
+{
+	spq:query($endPointURI, $defaultGraphURIs, $namedGraphURIs, $query, 
+			$SPARQL_RESULTS_XML)
+};
 
 
 (:~
@@ -133,8 +226,8 @@ declare function spq:query-get($endPointURI as xs:string,
 				$query as xs:string) 
 						as element(http:response)
 {
-	spq:query-get($endPointURI, $defaultGraphURIs, $namedGraphURIs, 
-			$SPARQL_RESULTS_XML, $query)
+	spq:query-get($endPointURI, $defaultGraphURIs, $namedGraphURIs, $query, 
+			$SPARQL_RESULTS_XML)
 };
 
 
@@ -143,20 +236,20 @@ declare function spq:query-get($endPointURI as xs:string,
  : @param $endPointURI the URL of the target SPARQL end-point.
  : @param $defaultGraphURIs the default graph URIs
  : @param $namedGraphURIs the named graph URIs
- : @param $mediaType the Media MIME-Type for the HTTP accept header.
  : @param $query the SPARQL query to be sent.
+ : @param $mediaType the Media MIME-Type for the HTTP accept header.
  : @return the query response wrapped in an query-result element that carries 
  : the response content type.
  :)
 declare function spq:query-get($endPointURI as xs:string, 
 		$defaultGraphURIs as xs:string*, $namedGraphURIs as xs:string*, 
-				$mediaType as xs:string, $query as xs:string) 
+				$query as xs:string, $mediaType as xs:string) 
 						as element(http:response)
 {
 	impl:normalise-response(
 			impl:http-request( 
 					spq:submission('GET', $endPointURI, $defaultGraphURIs, 
-							$namedGraphURIs, $mediaType, $query))
+							$namedGraphURIs, $query, $mediaType))
 	)
 };
 
@@ -177,7 +270,7 @@ declare function spq:query-post($endPointURI as xs:string,
 						as element(http:response)
 {
 	spq:query-post($endPointURI, $defaultGraphURIs, $namedGraphURIs,
-			$SPARQL_RESULTS_XML, $query)
+			$query, $SPARQL_RESULTS_XML)
 };
 
 
@@ -187,20 +280,20 @@ declare function spq:query-post($endPointURI as xs:string,
  : @param $endPointURI the URL of the target SPARQL end-point.
  : @param $defaultGraphURIs the default graph URIs
  : @param $namedGraphURIs the named graph URIs
- : @param $mediaType the Media MIME-Type for the HTTP accept header.
  : @param $query the SPARQL query to be sent.
+ : @param $mediaType the Media MIME-Type for the HTTP accept header.
  : @return the query response wrapped in an query-result element that carries 
  : the response content type.
  :)
 declare function spq:query-post($endPointURI as xs:string,
 		$defaultGraphURIs as xs:string*, $namedGraphURIs as xs:string*, 
-				$mediaType as xs:string, $query as xs:string) 
+				$query as xs:string, $mediaType as xs:string) 
 						as element(http:response)
 {
 	impl:normalise-response(
 			impl:http-request( 
 					spq:submission('POST', $endPointURI, $defaultGraphURIs, 
-							$namedGraphURIs, $mediaType, $query))
+							$namedGraphURIs, $query, $mediaType))
 	)
 };
 
@@ -209,19 +302,19 @@ declare function spq:query-post($endPointURI as xs:string,
  : Builds an XML fragment that carries the request details.
  : @param $method HTTP method (GET|POST)
  : @param $endPointURI the URL of the target Graph Store end-point. 
- : @param $defaultGraphURIs the default graph URIs
- : @param $namedGraphURIs the named graph URIs
- : @param $mediaType Media MIME-Type for the HTTP accpet header
+ : @param $defaultGraphURIs the default graph URIs.
+ : @param $namedGraphURIs the named graph URIs.
  : @param $query An RDF graph.
+ : @param $mediaType Media MIME-Type for the HTTP accpet header.
  : @return the HTTP request XML fragment.
  :)
-declare function spq:submission($method as xs:string, $endpoitURI as xs:string, $defaultGraphURIs as xs:string*, 
-		$namedGraphURIs as xs:string*, $mediaType as xs:string, $query as item()?) as 
+declare function (: private :) spq:submission($method as xs:string, $endpoitURI as xs:string, $defaultGraphURIs as xs:string*, 
+		$namedGraphURIs as xs:string*, $query as item()?, $mediaType as xs:string) as 
 				element(http:request) 
 {
 	let $queryParam as xs:string := concat('query=', encode-for-uri($query))
-	let $defaultGraphUriParams as xs:string* := for $uri in $defaultGraphURIs return concat('default=', $uri)
-	let $namedGraphUriParams as xs:string* := for $uri in $namedGraphURIs return concat('graph=', $uri)
+	let $defaultGraphUriParams as xs:string* := for $uri in $defaultGraphURIs return concat('default-graph-uri=', encode-for-uri($uri))
+	let $namedGraphUriParams as xs:string* := for $uri in $namedGraphURIs return concat('named-graph-uri=', encode-for-uri($uri))
 	let $requestParams as xs:string := 
 			concat('?', string-join(($queryParam, $defaultGraphUriParams, $namedGraphUriParams), '&amp;amp;'))
 	return
