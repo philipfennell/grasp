@@ -11,7 +11,7 @@ is the key to realising the potential of Big Data.
 
 Linked [Open] Data is built upon the foundations of the Semantic Web technologies 
 and as such is exposed as RDF Graphs and queried via the SPARQL query language.
-	Due to the historical lack of standard protocols for acceessing these 
+Due to the historical lack of standard protocols for acceessing these 
 repositories it has been left to a variety of implementation specific APIs to 
 load and query the data sets held within and often requiring the additional 
 complexity of a middle-tier archtecture to bridge the gap between content stores 
@@ -23,7 +23,7 @@ querying RDF data sets over HTTP:
 SPARQL 1.1 Graph Store HTTP Protocol
 SPARQL 1.1 Protocol
 
-These protocols deal with RDF Graph Data management and Querying respectively and,
+These protocols deal with RDF Graph Data-set management and Querying respectively and,
 in effect provide a RESTful interafce to a Graph Store. An increasing number of 
 Graph Stores are implementing support for these protocols and to enable MarkLogic 
 to interact directly with these data sources I've been developing a set of XQuery 
@@ -66,7 +66,7 @@ delete-*-graph = DELETE
 
 If the rate at which the Linked Open Data Cloud has expanded over the last five 
 years is anything to go by, the ability of businesses to interact with such a 
-richly interlinked source of information will be the defining factor in the 
+richly inter-linked source of information will be the defining factor in the 
 realistion of Big Data's potential.
 
 [Demonstration]
