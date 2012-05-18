@@ -1,13 +1,13 @@
 # MarkLogic and the Linked Data Connection
 
 Big Data is 'big news' at the moment and whilst the Volume, Velocity and Variety 
-of that data continues to grow, and is predicted to at ever increasing rates, 
-its true Value is not any measure of the afore mentioned variables but the 
-connections within and between data sets and those connections have the potential
-to grow at an even fast rate as more connections emerge over time. Linked Data 
-is the key to realising the potential of Big Data.
+of that data continues to grow its true Value is not any measure of the afore 
+mentioned variables but the connections within and between data sets. Those 
+connections, or links, have the potential to grow at an even fast rate as more 
+links emerge over time. Linked Data is the key to realising the potential of 
+Big Data.
 
-[Linked Open Data Cloud]
+[Linked Open Data Cloud Graphic]
 
 Linked [Open] Data is built upon the foundations of the Semantic Web technologies 
 and as such is exposed as RDF Graphs and queried via the SPARQL query language.
@@ -23,11 +23,10 @@ querying RDF data sets over HTTP:
 SPARQL 1.1 Graph Store HTTP Protocol
 SPARQL 1.1 Protocol
 
-These protocols deal with RDF Graph Data-set management and Querying respectively and,
-in effect provide a RESTful interafce to a Graph Store. An increasing number of 
-Graph Stores are implementing support for these protocols and to enable MarkLogic 
-to interact directly with these data sources I've been developing a set of XQuery 
-libraries that implement the client end of these protocols.
+These protocols deal with RDF Graph Data-set management and Querying respectively . Support is growing for 
+these protocols and to enable MarkLogic to interact directly with these data 
+sources I've been developing a set of XQuery libraries that implement the client 
+end of these protocols.
 
 The GRASP (GRaph store And Sparql Protocol) libraries are divided into
 
@@ -48,21 +47,22 @@ requests to Graph Stores that support these protocols.
 * gsp:delete-default-graph(...)
 * gsp:delete-named-graph(...)
 * gsp:data(...)
+* spq:query(...)
+* spq:data(...)
 
 Why so many functions when one or two, with a pile of optional arguments, would 
-do? The simple answer is, I don't like generic functions with piles of optional 
-arguments where some have to be set as an empty sequence in order to pad the way
-to setting others.
+do? The simple answer is, I don't like 'arguments'. Well, I don't like too many  
+optional arguments where some have to be set as an empty sequence in order to 
+pad the way to setting others.
 
-Basically, these functions are wrappers for their respective RESTful actions:
+Basically, these functions are wrappers for their respective RESTful actions and,
+in effect, provide a RESTful interafce to a Graph Store.
 
-retrieve-*-graph-metainfo = HEAD 
-add-*-graph = PUT
-retrieve-*-graph = GET
-merge-*-graph = POST
-delete-*-graph = DELETE
+The Linked Open Data Cloud has grown...
 
-[Aninmate the growth of the LOD Cloud]
+[Aninmated the growth of the LOD Cloud]
+
+considerable in just five years.
 
 If the rate at which the Linked Open Data Cloud has expanded over the last five 
 years is anything to go by, the ability of businesses to interact with such a 
