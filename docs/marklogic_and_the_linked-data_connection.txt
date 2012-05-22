@@ -1,39 +1,43 @@
 # MarkLogic and the Linked Data Connection
 
-Big Data is 'big news' at the moment and whilst the Volume, Velocity and Variety 
-of that data continues to grow its true Value is not any measure of the afore 
-mentioned variables but the connections within and between data sets. Those 
-connections, or links, have the potential to grow at an even fast rate as more 
-links emerge over time. Linked Data is the key to realising the potential of 
-Big Data.
 
-[Linked Open Data Cloud Graphic]
+Big Data is 'big news' and whilst the Volume, Velocity and Variety of that data 
+continues to grow its true Value is not any measure of the afore mentioned 
+variables but the connections within and between data sets. Those connections, 
+or links, have the potential to grow at an even fast rate as more links emerge 
+over time. Linked Data underpins the value of Big Data and is the key to 
+realising the potential of Big Data. 
 
-Linked [Open] Data is built upon the foundations of the Semantic Web technologies 
-and as such is exposed as RDF Graphs and queried via the SPARQL query language.
+Linked [Open] Data is built upon the foundations of the Semantic Web 
+technologies and as such is exposed as RDF Graphs and queried via the SPARQL 
+query language.
+
 Due to the historical lack of standard protocols for acceessing these 
-repositories it has been left to a variety of implementation specific APIs to 
-load and query the data sets held within and often requiring the additional 
-complexity of a middle-tier archtecture to bridge the gap between content stores 
-and graph stores.
+repositories it has lead to a variety of implementation specific APIs to load 
+and query the data sets held within and the additional complexity of a 
+middle-tier archtecture to bridge the gap between content stores and graph 
+stores.
 
 The W3C have been working on a number of specifications regarding managing and 
 querying RDF data sets over HTTP:
 
-SPARQL 1.1 Graph Store HTTP Protocol
-SPARQL 1.1 Protocol
+* SPARQL 1.1 Graph Store HTTP Protocol
+* SPARQL 1.1 Protocol
 
-These protocols deal with RDF Graph Data-set management and Querying respectively . Support is growing for 
-these protocols and to enable MarkLogic to interact directly with these data 
-sources I've been developing a set of XQuery libraries that implement the client 
-end of these protocols.
+These protocols deal with RDF Graph Data-set management and Querying 
+respectively. Support is growing for these protocols and to enable MarkLogic to 
+interact directly with these data sources I've been developing GRASP 
+(GRaph store And Sparql Protocol), a GitHub Project 
 
-The GRASP (GRaph store And Sparql Protocol) libraries are divided into
+<https://github.com/philipfennell/grasp>, 
 
-GSP (Graph Store Protocol)
-SPQ	(SPARQL Protocol)
+which is a set of XQuery libraries that implement the client end of these 
+protocols. The GRASP libraries are divided into:
 
-and provide a range of convenience functions that simplify making the HTTP 
+* GSP (Graph Store Protocol)
+* SPQ (SPARQL Protocol)
+
+and provide a wide range of convenience functions that simplify making the HTTP 
 requests to Graph Stores that support these protocols.
 
 * gsp:add-default-graph(...)
@@ -51,28 +55,18 @@ requests to Graph Stores that support these protocols.
 * spq:data(...)
 
 Why so many functions when one or two, with a pile of optional arguments, would 
-do? The simple answer is, I don't like 'arguments'. Well, I don't like too many  
-optional arguments where some have to be set as an empty sequence in order to 
-pad the way to setting others.
+do? The simple answer is, I don't like too 'arguments'. Well, I don't like too 
+many optional arguments where some have to be set as an empty sequence in order 
+to pad the way to setting others.
 
-Basically, these functions are wrappers for their respective RESTful actions and,
-in effect, provide a RESTful interafce to a Graph Store.
+Basically, these functions are wrappers for their respective RESTful actions 
+and, in effect, provide a RESTful interafce to a Graph Store.
 
-The Linked Open Data Cloud has grown...
-
-[Aninmated the growth of the LOD Cloud]
-
-considerable in just five years.
-
-If the rate at which the Linked Open Data Cloud has expanded over the last five 
-years is anything to go by, the ability of businesses to interact with such a 
-richly inter-linked source of information will be the defining factor in the 
+The Linked Open Data Cloud has grown considerable in just five years. If the 
+rate at which the Linked Open Data Cloud has expanded over the last five years 
+is anything to go by, the ability of businesses to interact with such a richly 
+inter-linked source of information will be the defining factor in the 
 realistion of Big Data's potential.
-
-[Demonstration]
-
-
-
 
 
 
