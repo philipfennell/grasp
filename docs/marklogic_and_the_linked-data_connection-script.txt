@@ -16,10 +16,7 @@ more links emerge over time. Linked Data underpins the value of Big Data and is
 the key to realising the potential of Big Data. 
 
 
-Linked [Open] Data 
-
-
-is built upon the foundations of the Semantic Web technologies 
+Linked [Open] Data is built upon the foundations of the Semantic Web technologies 
 and as such is exposed as 
 
 
@@ -30,7 +27,7 @@ Due to the historical lack of standard protocols for acceessing these
 repositories 
 
 
-it has lead to a variety of implementation specific APIs to load and query the 
+it has led to a variety of implementation specific APIs to load and query the 
 data sets held within 
 
 
@@ -62,7 +59,7 @@ which is a set of XQuery libraries that implement the client end of these
 protocols. The GRASP libraries are divided into:
 
 * GSP (Graph Store Protocol)
-* SPQ	(SPARQL Protocol)
+* SPQ (SPARQL Protocol)
 
 
 and provide a wide range of convenience functions that simplify making the HTTP 
@@ -86,7 +83,7 @@ requests to Graph Stores that support these protocols.
 Why so many functions when one or two, with a pile of optional arguments, would 
 do? 
 
-The simple answer is, I don't like too 'arguments'. 
+The simple answer is, I don't like too many 'arguments'. 
 
 
 Well, I don't like too many optional arguments where some have to be set as an 
